@@ -1,0 +1,241 @@
+```html
+<!-- ... existing code ... -->
+          <div class="flex items-center gap-2 sm:gap-5 text-sm font-semibold text-inkMuted">
+            <a href="#features" class="hover:text-terracotta transition-colors" data-i18n="navFeatures">Features</a>
+            <a href="#ranks" class="hover:text-terracotta transition-colors" data-i18n="navRanks">Ranks</a>
+            <a href="#codes" class="hover:text-terracotta transition-colors" data-i18n="navCodes">Rank Codes</a>
+            <a href="#github-guide" class="hidden sm:inline hover:text-terracotta transition-colors" data-i18n="navGithub">GitHub Guide</a>
+          </div>
+<!-- ... existing code ... -->
+          <!-- Interactive Selection Feedback Box (No alert() used) -->
+          <div id="rank-selection-banner" class="hidden max-w-2xl mx-auto mt-8 rounded-2xl bg-sageLight border border-sage/40 px-5 py-4 text-center text-sm text-ink shadow-sm" role="status" aria-live="polite">
+            <p id="rank-selection-text" class="font-semibold"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rank Codes / Codes des rangs Section (100 Single-Use Codes: 34 VIP, 33 Pro, 33 Élite) -->
+      <section id="codes" class="py-16 sm:py-20 bg-parchmentDeep/55 border-y border-ink/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="text-center max-w-3xl mx-auto mb-10">
+            <span class="inline-block px-3.5 py-1 rounded-full bg-sageLight text-sageDeep text-xs font-bold mb-3" data-i18n="codesTag">SINGLE-USE CODE POOL (100 CODES)</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-ink" data-i18n="codesTitle">Rank Codes</h2>
+            <p class="mt-3 text-inkMuted text-sm sm:text-base" data-i18n="codesSubtitle">
+              All 100 single-use codes assigned per rank in peace_ranks.sk: 34 VIP codes, 33 Pro codes, and 33 Élite codes. Redeem in-game with /rank &lt;code&gt;.
+            </p>
+          </div>
+
+          <!-- Copy Feedback Banner (No alert() used) -->
+          <div id="code-copy-banner" class="hidden max-w-2xl mx-auto mb-8 rounded-2xl bg-honeyLight border border-terracotta/30 px-5 py-3.5 text-center text-xs sm:text-sm font-semibold text-ink shadow-sm" role="status" aria-live="polite">
+            <p id="code-copy-text"></p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-7">
+            <!-- VIP Codes Column (34 Codes: VIP-1 to VIP-34) -->
+            <div class="rounded-3xl bg-white p-6 sm:p-7 border border-ink/10 shadow-cozy flex flex-col">
+              <div class="flex items-center justify-between gap-2 pb-4 border-b border-ink/10">
+                <div>
+                  <span class="px-3 py-1 rounded-full bg-sageLight text-sageDeep text-xs font-bold" data-i18n="rank1Badge">VIP</span>
+                  <h3 class="font-display text-xl font-bold text-ink mt-2" data-i18n="vipCodesHeading">VIP Codes (34)</h3>
+                </div>
+                <span id="count-vip" class="px-3 py-1.5 rounded-xl bg-sageLight text-sageDeep text-xs font-bold tabular-nums">34/34</span>
+              </div>
+              <p class="text-xs text-inkMuted mt-3 mb-4" data-i18n="vipCodesHint">
+                Assigned to VIP (10 € PlayStation gift card — France version). Click any code to copy.
+              </p>
+              <div id="codes-list-vip" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Pro Codes Column (33 Codes: PRO-1 to PRO-33) -->
+            <div class="rounded-3xl bg-white p-6 sm:p-7 border border-terracotta/40 shadow-cozy flex flex-col">
+              <div class="flex items-center justify-between gap-2 pb-4 border-b border-ink/10">
+                <div>
+                  <span class="px-3 py-1 rounded-full bg-terracottaLight text-terracottaDeep text-xs font-bold" data-i18n="rank2Badge">PRO</span>
+                  <h3 class="font-display text-xl font-bold text-ink mt-2" data-i18n="proCodesHeading">Pro Codes (33)</h3>
+                </div>
+                <span id="count-pro" class="px-3 py-1.5 rounded-xl bg-terracottaLight text-terracottaDeep text-xs font-bold tabular-nums">33/33</span>
+              </div>
+              <p class="text-xs text-inkMuted mt-3 mb-4" data-i18n="proCodesHint">
+                Assigned to Pro (20 € PlayStation gift card — France version). Click any code to copy.
+              </p>
+              <div id="codes-list-pro" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1"></div>
+            </div>
+
+            <!-- Élite Codes Column (33 Codes: ELITE-1 to ELITE-33) -->
+            <div class="rounded-3xl bg-white p-6 sm:p-7 border border-ink/10 shadow-cozy flex flex-col">
+              <div class="flex items-center justify-between gap-2 pb-4 border-b border-ink/10">
+                <div>
+                  <span class="px-3 py-1 rounded-full bg-honeyLight text-terracottaDeep text-xs font-bold" data-i18n="eliteCodeBadge">ÉLITE</span>
+                  <h3 class="font-display text-xl font-bold text-ink mt-2" data-i18n="eliteCodesHeading">Élite Codes (33)</h3>
+                </div>
+                <span id="count-elite" class="px-3 py-1.5 rounded-xl bg-honeyLight text-terracottaDeep text-xs font-bold tabular-nums">33/33</span>
+              </div>
+              <p class="text-xs text-inkMuted mt-3 mb-4" data-i18n="eliteCodesHint">
+                Assigned to Élite (Minecraft Java Edition Premium account). Click any code to copy.
+              </p>
+              <div id="codes-list-elite" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Free GitHub Hosting Guide -->
+<!-- ... existing code ... -->
+        navFeatures: 'Features',
+        navRanks: 'Ranks',
+        navCodes: 'Rank Codes',
+        navGithub: 'GitHub Guide',
+<!-- ... existing code ... -->
+        buyRankBtn: 'Exchange / Choose Rank',
+        codesTag: 'SINGLE-USE CODE POOL (100 CODES)',
+        codesTitle: 'Rank Codes',
+        codesSubtitle: 'All 100 single-use codes assigned per rank in peace_ranks.sk: 34 VIP codes, 33 Pro codes, and 33 Élite codes. Redeem in-game with /rank <code>.',
+        vipCodesHeading: 'VIP Codes (34)',
+        vipCodesHint: 'Assigned to VIP (10 € PlayStation gift card — France version). Click any code to copy.',
+        proCodesHeading: 'Pro Codes (33)',
+        proCodesHint: 'Assigned to Pro (20 € PlayStation gift card — France version). Click any code to copy.',
+        eliteCodeBadge: 'ÉLITE',
+        eliteCodesHeading: 'Élite Codes (33)',
+        eliteCodesHint: 'Assigned to Élite (Minecraft Java Edition Premium account). Click any code to copy.',
+        githubTag: 'FREE HOSTING GUIDE',
+<!-- ... existing code ... -->
+        navFeatures: 'Fonctionnalités',
+        navRanks: 'Rangs',
+        navCodes: 'Codes des rangs',
+        navGithub: 'Guide GitHub',
+<!-- ... existing code ... -->
+        buyRankBtn: 'Échanger / Choisir ce Rang',
+        codesTag: 'LISTE DE 100 CODES À USAGE UNIQUE',
+        codesTitle: 'Codes des rangs',
+        codesSubtitle: 'Les 100 codes à usage unique attribués par rang dans peace_ranks.sk : 34 codes VIP, 33 codes Pro et 33 codes Élite. À utiliser en jeu avec /rank <code>.',
+        vipCodesHeading: 'Codes VIP (34)',
+        vipCodesHint: 'Attribués au rang VIP (carte cadeau PlayStation 10 € — version France). Cliquez sur un code pour le copier.',
+        proCodesHeading: 'Codes Pro (33)',
+        proCodesHint: 'Attribués au rang Pro (carte cadeau PlayStation 20 € — version France). Cliquez sur un code pour le copier.',
+        eliteCodeBadge: 'ÉDITION ÉLITE',
+        eliteCodesHeading: 'Codes Élite (33)',
+        eliteCodesHint: 'Attribués au rang Élite (compte Minecraft Java Édition Premium). Cliquez sur un code pour le copier.',
+        githubTag: 'HÉBERGEMENT GRATUIT',
+<!-- ... existing code ... -->
+    // Current language ('en' or 'fr') and rank mode ('java', 'gems', or 'money')
+    let currentLang = 'en';
+    let currentRankMode = 'java';
+
+    // Exact 100 single-use rank codes matching peace_ranks.sk (34 VIP, 33 Pro, 33 Élite)
+    const rankCodePool = {
+      vip: Array.from({ length: 34 }, (_, idx) => ({
+        code: `VIP-${idx + 1}`,
+        used: false
+      })),
+      pro: Array.from({ length: 33 }, (_, idx) => ({
+        code: `PRO-${idx + 1}`,
+        used: false
+      })),
+      elite: Array.from({ length: 33 }, (_, idx) => ({
+        code: `ELITE-${idx + 1}`,
+        used: false
+      }))
+    };
+
+    /**
+     * Renders the 100 single-use codes per rank column and updates remaining/total counters.
+     */
+    function renderRankCodes() {
+      try {
+        const categories = [
+          {
+            key: 'vip',
+            listId: 'codes-list-vip',
+            countId: 'count-vip',
+            badgeStyle: 'bg-parchment hover:bg-sageLight text-ink hover:text-sageDeep border-ink/15'
+          },
+          {
+            key: 'pro',
+            listId: 'codes-list-pro',
+            countId: 'count-pro',
+            badgeStyle: 'bg-parchment hover:bg-terracottaLight text-ink hover:text-terracottaDeep border-ink/15'
+          },
+          {
+            key: 'elite',
+            listId: 'codes-list-elite',
+            countId: 'count-elite',
+            badgeStyle: 'bg-parchment hover:bg-honeyLight text-ink hover:text-terracottaDeep border-ink/15'
+          }
+        ];
+
+        categories.forEach(({ key, listId, countId, badgeStyle }) => {
+          const items = rankCodePool[key] || [];
+          const total = items.length;
+          const remaining = items.filter((entry) => !entry.used).length;
+
+          const countEl = document.getElementById(countId);
+          if (countEl) {
+            countEl.textContent = `${remaining}/${total}`;
+          }
+
+          const container = document.getElementById(listId);
+          if (!container) return;
+
+          container.innerHTML = '';
+          items.forEach((entry) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = entry.code;
+            btn.className = entry.used
+              ? 'px-2.5 py-2 rounded-xl text-xs font-mono font-semibold bg-ink/5 text-inkMuted line-through border border-ink/10 cursor-pointer transition-colors'
+              : `px-2.5 py-2 rounded-xl text-xs font-mono font-bold ${badgeStyle} border transition-colors cursor-pointer`;
+            btn.addEventListener('click', () => copyRankCode(entry.code));
+            container.appendChild(btn);
+          });
+        });
+      } catch (err) {
+        console.error('Error rendering rank codes:', err);
+      }
+    }
+
+    /**
+     * Copies a single-use rank code to clipboard with fallback and displays a status banner.
+     */
+    function copyRankCode(codeValue) {
+      try {
+        let copied = false;
+        const tempInput = document.createElement('input');
+        tempInput.value = codeValue;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, tempInput.value.length);
+        try {
+          copied = document.execCommand('copy');
+        } catch (copyErr) {
+          copied = false;
+        }
+        document.body.removeChild(tempInput);
+
+        const banner = document.getElementById('code-copy-banner');
+        const textEl = document.getElementById('code-copy-text');
+        if (banner && textEl) {
+          if (copied) {
+            textEl.textContent =
+              currentLang === 'fr'
+                ? `Code copié : ${codeValue} — Utilisez /rank ${codeValue} en jeu (usage unique).`
+                : `Copied code: ${codeValue} — Redeem in-game with /rank ${codeValue} (single-use).`;
+          } else {
+            textEl.textContent =
+              currentLang === 'fr'
+                ? `Code sélectionné : ${codeValue} — Utilisez /rank ${codeValue} en jeu.`
+                : `Selected code: ${codeValue} — Redeem in-game with /rank ${codeValue}.`;
+          }
+          banner.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error('Error copying rank code:', err);
+      }
+    }
+<!-- ... existing code ... -->
+    // Initialize defaults on DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRankCodes();
+      setLanguage('en');
+    });
+<!-- ... existing code ... -->
+```
