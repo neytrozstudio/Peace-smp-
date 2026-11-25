@@ -1,1474 +1,1262 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <!-- Responsive viewport for mobile, tablet, and desktop layouts -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Peace SMP — Cozy Semi-Anarchy Minecraft Server</title>
-
-  <!-- Tailwind CSS CDN for utility-first styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Fraunces for storybook display headers and Plus Jakarta Sans for clean legibility -->
+  <title>Peace SMP — Ranks &amp; Boutique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <script>
-    // Configure custom cozy pastoral color tokens and font families
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"Fraunces"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
-          },
-          colors: {
-            parchment: '#FAF6EE',
-            creamWarm: '#F3ECE0',
-            skySoft: '#DCEBF5',
-            skyMist: '#EBF3F9',
-            skyAccent: '#5B89A6',
-            roseSoft: '#F2E2E4',
-            roseDust: '#C98E96',
-            roseDeep: '#8E555E',
-            meadow: '#7A9E7E',
-            meadowSoft: '#E3EFE4',
-            ink: '#2D2A26',
-            inkSoft: '#635D54'
-          }
-        }
-      }
-    };
-  </script>
-
   <style>
-    /* Subtle paper texture and gentle pastoral background gradient */
-    body {
-      background-color: #FAF6EE;
-      background-image:
-        radial-gradient(circle at 12% 10%, rgba(220, 235, 245, 0.65) 0%, transparent 42%),
-        radial-gradient(circle at 88% 14%, rgba(242, 226, 228, 0.55) 0%, transparent 40%),
-        radial-gradient(circle at 50% 95%, rgba(227, 239, 228, 0.5) 0%, transparent 48%);
-      color: #2D2A26;
-      overflow-x: hidden;
+    :root {
+      --bg-cream: #fbf7f2;
+      --bg-card: #fffdf9;
+      --bg-soft-blue: #eef5fb;
+      --bg-soft-rose: #fdf1f4;
+      --ink-main: #2d2a32;
+      --ink-muted: #65606d;
+      --sky-accent: #6ea8d8;
+      --sky-deep: #4c86b8;
+      --rose-accent: #dc8ea4;
+      --rose-deep: #be6b84;
+      --sage-accent: #7da88b;
+      --border-soft: rgba(77, 70, 88, 0.12);
+      --shadow-cozy: 0 14px 34px rgba(64, 56, 74, 0.08);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
     }
 
-    /* Smooth card lift for interactive elements */
-    .story-card {
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .story-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px -12px rgba(45, 42, 38, 0.14);
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(110, 168, 216, 0.16), transparent 36%),
+        radial-gradient(circle at 88% 12%, rgba(220, 142, 164, 0.16), transparent 38%),
+        var(--bg-cream);
+      color: var(--ink-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 20px 64px;
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--sky-accent), var(--rose-accent));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 18px rgba(110, 168, 216, 0.25);
+    }
+
+    .brand-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .dot-live {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--sage-accent);
+      box-shadow: 0 0 0 4px rgba(125, 168, 139, 0.2);
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--ink-muted);
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, var(--sky-accent), var(--rose-accent));
+      color: #fff;
+    }
+
+    /* Hero with pastoral Minecraft SVG */
+    .hero {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-cozy);
+      margin-bottom: 30px;
+    }
+
+    .hero-scene {
+      width: 100%;
+      height: 190px;
+      display: block;
+      background: linear-gradient(180deg, #dceefb 0%, #f7e6ec 65%, #e5f0df 100%);
+    }
+
+    .hero-body {
+      padding: 26px 28px 30px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (max-width: 820px) {
+      .hero-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--bg-soft-blue), var(--bg-soft-rose));
+      color: var(--ink-main);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      line-height: 1.18;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: var(--ink-muted);
+      font-size: 0.96rem;
+    }
+
+    .hero-info-card {
+      background: linear-gradient(145deg, var(--bg-soft-blue), var(--bg-soft-rose));
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      font-size: 0.9rem;
+    }
+
+    .hero-info-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .hero-info-list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      color: var(--ink-main);
+      font-size: 0.86rem;
+    }
+
+    /* Section header */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.55rem;
+    }
+
+    .section-head p {
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Ranks Grid (Home View) */
+    .ranks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 34px;
+    }
+
+    @media (max-width: 900px) {
+      .ranks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rank-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-cozy);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rank-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(64, 56, 74, 0.12);
+    }
+
+    .rank-card.vip {
+      border-top: 5px solid var(--sky-accent);
+    }
+
+    .rank-card.pro {
+      border-top: 5px solid #9f96d9;
+    }
+
+    .rank-card.elite {
+      border-top: 5px solid var(--rose-accent);
+    }
+
+    .rank-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .vip .rank-pill {
+      background: var(--bg-soft-blue);
+      color: var(--sky-deep);
+    }
+
+    .pro .rank-pill {
+      background: #f1effc;
+      color: #6358a8;
+    }
+
+    .elite .rank-pill {
+      background: var(--bg-soft-rose);
+      color: var(--rose-deep);
+    }
+
+    .rank-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .rank-tagline {
+      color: var(--ink-muted);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+    }
+
+    .rank-perks {
+      list-style: none;
+      display: grid;
+      gap: 9px;
+      margin-bottom: 22px;
+      font-size: 0.89rem;
+    }
+
+    .rank-perks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .check-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .vip .check-dot {
+      background: var(--bg-soft-blue);
+      color: var(--sky-deep);
+    }
+
+    .pro .check-dot {
+      background: #f1effc;
+      color: #6358a8;
+    }
+
+    .elite .check-dot {
+      background: var(--bg-soft-rose);
+      color: var(--rose-deep);
+    }
+
+    .btn-choose {
+      width: 100%;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 13px 18px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: pointer;
+      color: #fff;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    .vip .btn-choose {
+      background: linear-gradient(135deg, #6ea8d8, #5893c4);
+    }
+
+    .pro .btn-choose {
+      background: linear-gradient(135deg, #8b8fd8, #a986c9);
+    }
+
+    .elite .btn-choose {
+      background: linear-gradient(135deg, #dc8ea4, #c5718b);
+    }
+
+    .btn-choose:hover {
+      opacity: 0.94;
+      transform: translateY(-1px);
+    }
+
+    /* Dedicated Rank Detail View (Hidden until Choose Rank clicked) */
+    .rank-detail-view {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-cozy);
+      margin-bottom: 34px;
+      animation: fadeSlide 0.28s ease;
+    }
+
+    .rank-detail-view.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .detail-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .btn-back {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-cream);
+      color: var(--ink-main);
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.86rem;
+      cursor: pointer;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 880px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-box {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .detail-box h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .odds-note {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: var(--bg-soft-rose);
+      border: 1px solid rgba(220, 142, 164, 0.35);
+      font-size: 0.84rem;
+      color: var(--ink-main);
+    }
+
+    .btn-buy-main {
+      width: 100%;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--sky-deep), var(--rose-deep));
+      box-shadow: 0 10px 22px rgba(110, 168, 216, 0.25);
+      margin-top: 14px;
+    }
+
+    .discord-reveal {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--bg-soft-blue);
+      border: 1px solid rgba(110, 168, 216, 0.4);
+      font-size: 0.88rem;
+    }
+
+    .discord-reveal.visible {
+      display: block;
+    }
+
+    .discord-link {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--sky-deep);
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid var(--border-soft);
+    }
+
+    /* Verification & Counter Box inside Detail View */
+    .verify-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .verify-input {
+      flex: 1;
+      min-width: 180px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-soft);
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .btn-verify {
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 11px 16px;
+      background: var(--ink-main);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .verify-feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      display: none;
+    }
+
+    .verify-feedback.ok {
+      display: block;
+      background: #eaf6ee;
+      border: 1px solid rgba(125, 168, 139, 0.45);
+      color: #214d32;
+    }
+
+    .verify-feedback.err {
+      display: block;
+      background: #fdecee;
+      border: 1px solid rgba(220, 142, 164, 0.5);
+      color: #7a283b;
+    }
+
+    .ingame-code-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px dashed var(--sage-accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ingame-code-box code {
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #1f4d31;
+    }
+
+    .btn-copy-small {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-cream);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .counter-panel {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border-soft);
+      font-size: 0.84rem;
+    }
+
+    .counter-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 8px 0 10px;
+    }
+
+    .c-badge {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .counter-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      border: 1px solid var(--border-soft);
+      background: #fff;
+      padding: 6px 11px;
+      border-radius: 9px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Footer / Hosting Guide */
+    .guide-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      padding: 22px 26px;
+      box-shadow: var(--shadow-cozy);
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+    }
+
+    .guide-card h3 {
+      font-family: 'Fraunces', serif;
+      color: var(--ink-main);
+      font-size: 1.15rem;
+      margin-bottom: 8px;
     }
   </style>
 </head>
-<body class="min-h-screen font-sans antialiased selection:bg-skySoft selection:text-ink">
-  <!-- Top Navigation & Language Toggle Bar -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-parchment/90 border-b border-ink/10">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
-      <button
-        type="button"
-        onclick="showHomeView()"
-        class="flex items-center gap-3 text-left group cursor-pointer"
-        aria-label="Peace SMP Home"
-      >
-        <span class="w-10 h-10 rounded-2xl bg-skySoft border border-skyAccent/30 flex items-center justify-center text-skyAccent font-display font-bold text-lg shadow-sm group-hover:bg-roseSoft group-hover:text-roseDeep transition-colors">
-          P
-        </span>
+<body>
+  <div class="container">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">P</div>
         <div>
-          <span class="block font-display text-lg sm:text-xl font-bold text-ink leading-tight">Peace SMP</span>
-          <span class="block text-xs text-inkSoft font-medium" data-i18n="headerSubtitle">Cozy Semi-Anarchy • Pastoral Realm</span>
-        </div>
-      </button>
-
-      <nav class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm font-semibold">
-        <a href="#about" onclick="showHomeView()" class="px-3 py-2 rounded-xl text-inkSoft hover:text-ink hover:bg-creamWarm transition-colors" data-i18n="navAbout">
-          About
-        </a>
-        <a href="#ranks" onclick="showHomeView()" class="px-3 py-2 rounded-xl text-inkSoft hover:text-ink hover:bg-creamWarm transition-colors" data-i18n="navRanks">
-          Ranks
-        </a>
-        <a href="#deploy" onclick="showHomeView()" class="hidden md:inline-block px-3 py-2 rounded-xl text-inkSoft hover:text-ink hover:bg-creamWarm transition-colors" data-i18n="navDeploy">
-          GitHub Pages
-        </a>
-
-        <!-- Gender-neutral EN / FR Language Switcher -->
-        <div class="inline-flex items-center rounded-2xl bg-creamWarm p-1 border border-ink/10" role="group" aria-label="Language toggle">
-          <button
-            id="btn-lang-en"
-            type="button"
-            onclick="setLang('en')"
-            class="px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer bg-skyAccent text-white shadow-sm"
-          >
-            EN
-          </button>
-          <button
-            id="btn-lang-fr"
-            type="button"
-            onclick="setLang('fr')"
-            class="px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer text-inkSoft hover:text-ink"
-          >
-            FR
-          </button>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Main Content Container -->
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-14">
-
-    <!-- ==================== HOME VIEW ==================== -->
-    <div id="home-view" class="space-y-14">
-      <!-- Hero & Illustrated Minecraft Pastoral Scenery -->
-      <section class="rounded-3xl bg-creamWarm/85 border border-ink/10 shadow-sm overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-6 sm:p-10">
-          <!-- Left Copy & Server IP -->
-          <div class="lg:col-span-7 space-y-5">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-skyMist border border-skyAccent/25 text-xs font-bold text-skyAccent">
-              <span class="w-2 h-2 rounded-full bg-meadow"></span>
-              <span data-i18n="heroPill">Peaceful Valleys • Untamed Semi-Anarchy</span>
-            </div>
-
-            <h1 class="font-display text-3xl sm:text-5xl font-bold text-ink leading-tight" data-i18n="heroTitle">
-              A warm, unhurried world where quiet builds meet wild frontiers.
-            </h1>
-
-            <p class="text-sm sm:text-base text-inkSoft leading-relaxed max-w-2xl" data-i18n="heroDesc">
-              Peace SMP brings together calm pastoral horizons, balanced progression, and semi-anarchy freedom in a welcoming space designed for everyone. Explore at your own pace, earn rewards, or inspect each rank before deciding.
-            </p>
-
-            <!-- Server IP Bar -->
-            <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-1">
-              <div class="flex items-center justify-between sm:justify-start gap-3 px-4 py-3 rounded-2xl bg-white border border-ink/15 shadow-sm">
-                <div>
-                  <span class="block text-[11px] uppercase tracking-wider font-bold text-inkSoft" data-i18n="ipLabel">Server Address</span>
-                  <code id="server-ip-text" class="text-sm sm:text-base font-bold text-ink select-all">play.peacesmp.net</code>
-                </div>
-                <button
-                  type="button"
-                  onclick="copyServerIp()"
-                  class="px-3.5 py-2 rounded-xl bg-skySoft hover:bg-skyAccent text-ink hover:text-white text-xs font-bold transition-colors cursor-pointer"
-                >
-                  <span data-i18n="copyIpBtn">Copy IP</span>
-                </button>
-              </div>
-
-              <a
-                href="#ranks"
-                class="inline-flex items-center justify-center px-5 py-3.5 rounded-2xl bg-roseSoft hover:bg-roseDust text-roseDeep hover:text-white text-xs sm:text-sm font-bold border border-roseDust/30 transition-colors"
-                data-i18n="exploreRanksBtn"
-              >
-                Explore Ranks
-              </a>
-            </div>
-
-            <!-- Copy Feedback Banner -->
-            <div id="ip-feedback" class="hidden rounded-2xl bg-meadowSoft border border-meadow/35 px-4 py-2.5 text-xs sm:text-sm font-semibold text-ink" role="status" aria-live="polite">
-              <p id="ip-feedback-msg"></p>
-            </div>
-
-            <!-- Compact Remaining Verification Codes Counter Badge (Home View) -->
-            <div class="rounded-2xl bg-white/95 border border-ink/10 p-4 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <span class="block text-[11px] uppercase tracking-wider font-bold text-skyAccent" data-i18n="homeCounterTag">Verification Stock</span>
-                <p id="home-remaining-summary" class="text-xs sm:text-sm font-bold text-ink mt-0.5"></p>
-                <p id="home-remaining-breakdown" class="text-[11px] sm:text-xs text-inkSoft mt-0.5"></p>
-              </div>
-              <span class="self-start sm:self-center px-3 py-1 rounded-full bg-creamWarm text-ink text-xs font-bold border border-ink/10" data-i18n="homeCounterBadge">Codes Private</span>
-            </div>
-          </div>
-
-          <!-- Illustrated Minecraft Countryside Scenery SVG -->
-          <div class="lg:col-span-5">
-            <div class="rounded-3xl overflow-hidden border border-ink/10 bg-skyMist shadow-inner">
-              <svg viewBox="0 0 480 340" class="w-full h-auto block" role="img" aria-label="Illustrated pastel Minecraft hills, oak trees, cottage roof, and floating clouds">
-                <!-- Soft Sky Gradient -->
-                <defs>
-                  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#D4E8F7" />
-                    <stop offset="65%" stop-color="#EEF5FA" />
-                    <stop offset="100%" stop-color="#FAF6EE" />
-                  </linearGradient>
-                  <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#B8D4BE" />
-                    <stop offset="100%" stop-color="#96B99E" />
-                  </linearGradient>
-                  <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#8BB392" />
-                    <stop offset="100%" stop-color="#6F9876" />
-                  </linearGradient>
-                </defs>
-
-                <rect width="480" height="340" fill="url(#skyGrad)" />
-
-                <!-- Warm Sun Block -->
-                <rect x="372" y="42" width="44" height="44" rx="8" fill="#F6D58E" opacity="0.9" />
-
-                <!-- Blocky Pastel Clouds -->
-                <g fill="#FFFFFF" opacity="0.88">
-                  <rect x="52" y="54" width="68" height="20" rx="6" />
-                  <rect x="68" y="42" width="38" height="16" rx="5" />
-                  <rect x="215" y="76" width="84" height="22" rx="7" />
-                  <rect x="236" y="62" width="44" height="18" rx="6" />
-                </g>
-
-                <!-- Distant Rolling Blocky Hills -->
-                <path d="M0 195 H80 V172 H175 V190 H275 V165 H380 V184 H480 V340 H0 Z" fill="url(#hillBack)" />
-
-                <!-- Foreground Pastoral Meadow -->
-                <path d="M0 232 H120 V214 H250 V228 H370 V210 H480 V340 H0 Z" fill="url(#hillFront)" />
-
-                <!-- Dirt Path -->
-                <path d="M198 340 H248 V292 H286 V252 H324 V228 H286 V268 H248 V308 H198 Z" fill="#DFC7A7" />
-
-                <!-- Cozy Minecraft Cottage -->
-                <g>
-                  <!-- Walls -->
-                  <rect x="92" y="182" width="76" height="52" rx="4" fill="#F7EFE2" stroke="#C8B69E" stroke-width="2" />
-                  <!-- Dusty Rose & Terracotta Stepped Roof -->
-                  <rect x="84" y="170" width="92" height="14" rx="4" fill="#C98E96" />
-                  <rect x="96" y="158" width="68" height="14" rx="4" fill="#B57881" />
-                  <!-- Chimney -->
-                  <rect x="142" y="138" width="14" height="22" rx="2" fill="#D5C4AE" />
-                  <!-- Door & Warm Window -->
-                  <rect x="122" y="204" width="16" height="30" rx="3" fill="#9E7B5B" />
-                  <rect x="102" y="196" width="14" height="14" rx="2" fill="#FCE59C" />
-                  <rect x="144" y="196" width="14" height="14" rx="2" fill="#FCE59C" />
-                </g>
-
-                <!-- Blocky Oak Tree Left -->
-                <g>
-                  <rect x="44" y="188" width="14" height="44" fill="#8C6A4A" />
-                  <rect x="22" y="150" width="58" height="42" rx="8" fill="#7A9E7E" />
-                  <rect x="32" y="136" width="38" height="20" rx="6" fill="#91B595" />
-                </g>
-
-                <!-- Blocky Oak Tree Right -->
-                <g>
-                  <rect x="394" y="176" width="14" height="46" fill="#8C6A4A" />
-                  <rect x="370" y="136" width="62" height="44" rx="8" fill="#6E9474" />
-                  <rect x="382" y="122" width="38" height="20" rx="6" fill="#88AE8E" />
-                </g>
-
-                <!-- Wildflowers in Soft Rose & Sky Blue -->
-                <g>
-                  <rect x="314" y="254" width="6" height="6" rx="1" fill="#E8A5AE" />
-                  <rect x="336" y="272" width="6" height="6" rx="1" fill="#8BB8D6" />
-                  <rect x="184" y="268" width="6" height="6" rx="1" fill="#E8A5AE" />
-                  <rect x="364" y="246" width="6" height="6" rx="1" fill="#F4D078" />
-                </g>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Server Overview Section -->
-      <section id="about" class="space-y-6">
-        <div class="max-w-2xl space-y-2">
-          <span class="text-xs font-bold uppercase tracking-wider text-skyAccent" data-i18n="aboutTag">Server Overview</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-bold text-ink" data-i18n="aboutTitle">Built for calm exploration and spirited semi-anarchy</h2>
-          <p class="text-sm sm:text-base text-inkSoft leading-relaxed" data-i18n="aboutDesc">
-            Peace SMP keeps things welcoming without sacrificing frontier excitement. Gather resources, trade, build peaceful sanctuaries, and step into semi-anarchy adventures at your own rhythm.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div class="story-card rounded-3xl bg-white p-6 border border-ink/10 space-y-2.5">
-            <span class="inline-flex w-9 h-9 rounded-2xl bg-skySoft text-skyAccent font-bold items-center justify-center text-sm">01</span>
-            <h3 class="font-display text-lg font-bold text-ink" data-i18n="pillar1Title">Welcoming & Gender-Neutral</h3>
-            <p class="text-sm text-inkSoft leading-relaxed" data-i18n="pillar1Desc">
-              A friendly, balanced atmosphere where every player feels right at home, whether you prefer quiet farming or bold raids.
-            </p>
-          </div>
-
-          <div class="story-card rounded-3xl bg-white p-6 border border-ink/10 space-y-2.5">
-            <span class="inline-flex w-9 h-9 rounded-2xl bg-roseSoft text-roseDeep font-bold items-center justify-center text-sm">02</span>
-            <h3 class="font-display text-lg font-bold text-ink" data-i18n="pillar2Title">Semi-Anarchy Freedom</h3>
-            <p class="text-sm text-inkSoft leading-relaxed" data-i18n="pillar2Desc">
-              Unscripted stories unfold naturally across the map. Keep your gear sharp, scout wisely, and enjoy authentic survival tension.
-            </p>
-          </div>
-
-          <div class="story-card rounded-3xl bg-white p-6 border border-ink/10 space-y-2.5">
-            <span class="inline-flex w-9 h-9 rounded-2xl bg-meadowSoft text-meadow font-bold items-center justify-center text-sm">03</span>
-            <h3 class="font-display text-lg font-bold text-ink" data-i18n="pillar3Title">Steady Rank Progression</h3>
-            <p class="text-sm text-inkSoft leading-relaxed" data-i18n="pillar3Desc">
-              VIP, Pro, and Élite scale up thoughtfully with kits, cash rewards, stronger utilities, and chance-based Divine Sword odds.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Ranks Section on Home Page (ONLY Choose Rank / Choisir le rank buttons — NO buy button here) -->
-      <section id="ranks" class="space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div class="max-w-2xl space-y-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-roseDeep" data-i18n="ranksTag">Server Ranks</span>
-            <h2 class="font-display text-2xl sm:text-3xl font-bold text-ink" data-i18n="ranksTitle">Choose a rank to open its full interface</h2>
-            <p class="text-sm sm:text-base text-inkSoft leading-relaxed" data-i18n="ranksDesc">
-              Select VIP, Pro, or Élite below to view its kit tier, cash reward, advantages, Divine Sword chance, code checker, and purchase option inside the dedicated rank view.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- VIP Card -->
-          <article class="story-card rounded-3xl bg-white p-6 sm:p-7 border border-ink/10 flex flex-col justify-between space-y-6">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between gap-2">
-                <span class="px-3 py-1 rounded-full bg-skySoft text-skyAccent text-xs font-bold">VIP</span>
-                <span class="text-xs font-semibold text-inkSoft" data-i18n="vipTagline">Starter Boost</span>
-              </div>
-              <h3 class="font-display text-2xl font-bold text-ink">VIP</h3>
-              <p class="text-sm text-inkSoft leading-relaxed" data-i18n="vipCardSummary">
-                A gentle head start with a balanced starter kit, modest cash reward, and entry-level Divine Sword odds.
-              </p>
-            </div>
-            <!-- Only Choose Rank / Choisir le rank button on home page -->
-            <button
-              type="button"
-              onclick="openRankInterface('VIP')"
-              class="w-full py-3.5 px-5 rounded-2xl bg-skySoft hover:bg-skyAccent text-ink hover:text-white text-sm font-bold transition-colors cursor-pointer"
-              data-i18n="chooseRankBtn"
-            >
-              Choose Rank
-            </button>
-          </article>
-
-          <!-- Pro Card -->
-          <article class="story-card rounded-3xl bg-white p-6 sm:p-7 border border-skyAccent/35 flex flex-col justify-between space-y-6 shadow-sm">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between gap-2">
-                <span class="px-3 py-1 rounded-full bg-skyAccent/15 text-skyAccent text-xs font-bold">PRO</span>
-                <span class="text-xs font-semibold text-skyAccent" data-i18n="proTagline">Clear Step Up</span>
-              </div>
-              <h3 class="font-display text-2xl font-bold text-ink">Pro</h3>
-              <p class="text-sm text-inkSoft leading-relaxed" data-i18n="proCardSummary">
-                Noticeably stronger gear and cash rewards over VIP, smoother quality-of-life perks, and higher Divine Sword odds.
-              </p>
-            </div>
-            <!-- Only Choose Rank / Choisir le rank button on home page -->
-            <button
-              type="button"
-              onclick="openRankInterface('Pro')"
-              class="w-full py-3.5 px-5 rounded-2xl bg-skyAccent hover:bg-ink text-white text-sm font-bold transition-colors cursor-pointer"
-              data-i18n="chooseRankBtn"
-            >
-              Choose Rank
-            </button>
-          </article>
-
-          <!-- Élite Card -->
-          <article class="story-card rounded-3xl bg-white p-6 sm:p-7 border border-roseDust/45 flex flex-col justify-between space-y-6 shadow-sm">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between gap-2">
-                <span class="px-3 py-1 rounded-full bg-roseSoft text-roseDeep text-xs font-bold">ÉLITE</span>
-                <span class="text-xs font-semibold text-roseDeep" data-i18n="eliteTagline">Top Tier Edge</span>
-              </div>
-              <h3 class="font-display text-2xl font-bold text-ink">Élite</h3>
-              <p class="text-sm text-inkSoft leading-relaxed" data-i18n="eliteCardSummary">
-                Our highest progression tier with major advantages over Pro, top cash payouts, and peak Divine Sword odds.
-              </p>
-            </div>
-            <!-- Only Choose Rank / Choisir le rank button on home page -->
-            <button
-              type="button"
-              onclick="openRankInterface('Élite')"
-              class="w-full py-3.5 px-5 rounded-2xl bg-roseSoft hover:bg-roseDust text-roseDeep hover:text-white text-sm font-bold border border-roseDust/35 transition-colors cursor-pointer"
-              data-i18n="chooseRankBtn"
-            >
-              Choose Rank
-            </button>
-          </article>
-        </div>
-      </section>
-
-      <!-- GitHub Pages Hosting & Deployment Guide -->
-      <section id="deploy" class="rounded-3xl bg-creamWarm/85 border border-ink/10 p-6 sm:p-9 space-y-5">
-        <div class="space-y-1.5 max-w-2xl">
-          <span class="text-xs font-bold uppercase tracking-wider text-skyAccent" data-i18n="deployTag">GitHub Pages Guide</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-bold text-ink" data-i18n="deployTitle">Publish Peace SMP with GitHub Pages</h2>
-          <p class="text-sm text-inkSoft leading-relaxed" data-i18n="deployDesc">
-            Because this entire site lives in a single self-contained index.html file, hosting it on GitHub Pages takes only a few minutes.
-          </p>
-        </div>
-
-        <ol class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <li class="rounded-2xl bg-white p-5 border border-ink/10 space-y-1.5">
-            <span class="text-xs font-bold text-skyAccent" data-i18n="step1Label">Step 1</span>
-            <p class="font-bold text-ink" data-i18n="step1Title">Create a Repository</p>
-            <p class="text-inkSoft text-xs sm:text-sm leading-relaxed" data-i18n="step1Desc">
-              Create a new public repository on GitHub and upload this file named exactly index.html at the root.
-            </p>
-          </li>
-          <li class="rounded-2xl bg-white p-5 border border-ink/10 space-y-1.5">
-            <span class="text-xs font-bold text-roseDeep" data-i18n="step2Label">Step 2</span>
-            <p class="font-bold text-ink" data-i18n="step2Title">Enable GitHub Pages</p>
-            <p class="text-inkSoft text-xs sm:text-sm leading-relaxed" data-i18n="step2Desc">
-              Open Settings → Pages, choose Deploy from a branch, select main and / (root), then save.
-            </p>
-          </li>
-          <li class="rounded-2xl bg-white p-5 border border-ink/10 space-y-1.5">
-            <span class="text-xs font-bold text-meadow" data-i18n="step3Label">Step 3</span>
-            <p class="font-bold text-ink" data-i18n="step3Title">Share & Keep Codes Private</p>
-            <p class="text-inkSoft text-xs sm:text-sm leading-relaxed" data-i18n="step3Desc">
-              Visit your published Pages URL. Never paste plain-text verification code lists inside HTML files.
-            </p>
-          </li>
-        </ol>
-      </section>
-    </div>
-
-    <!-- ==================== DEDICATED RANK INTERFACE VIEW ==================== -->
-    <section id="rank-interface-view" class="hidden space-y-8" aria-live="polite">
-      <!-- Top Bar Inside Rank Interface -->
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <button
-          type="button"
-          onclick="showHomeView()"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white hover:bg-creamWarm text-ink text-xs sm:text-sm font-bold border border-ink/15 shadow-sm transition-colors cursor-pointer"
-        >
-          <span>←</span>
-          <span data-i18n="backToHomeBtn">Back to Home</span>
-        </button>
-
-        <!-- Quick Rank Switcher Tabs -->
-        <div class="inline-flex items-center gap-1.5 rounded-2xl bg-creamWarm p-1.5 border border-ink/10">
-          <button type="button" id="switch-VIP" onclick="renderRankInterface('VIP')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">VIP</button>
-          <button type="button" id="switch-Pro" onclick="renderRankInterface('Pro')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">Pro</button>
-          <button type="button" id="switch-Élite" onclick="renderRankInterface('Élite')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer">Élite</button>
+          <div class="brand-title">Peace SMP</div>
+          <div class="brand-sub" data-i18n="brandSub">Aventure Survie &amp; Ranks • Java &amp; Bedrock</div>
         </div>
       </div>
 
-      <!-- Main Rank Interface Card -->
-      <div class="rounded-3xl bg-white border border-ink/10 shadow-sm overflow-hidden">
-        <!-- Rank Banner Header -->
-        <div class="p-6 sm:p-9 bg-gradient-to-r from-skyMist via-parchment to-roseSoft/60 border-b border-ink/10">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div class="space-y-2">
-              <span id="iface-badge" class="inline-block px-3.5 py-1 rounded-full bg-white/90 text-ink text-xs font-bold border border-ink/10"></span>
-              <h2 id="iface-title" class="font-display text-3xl sm:text-4xl font-bold text-ink"></h2>
-              <p id="iface-subtitle" class="text-sm sm:text-base text-inkSoft max-w-2xl"></p>
-            </div>
-            <div class="rounded-2xl bg-white/90 px-5 py-3.5 border border-ink/10 shadow-sm shrink-0">
-              <span class="block text-[11px] uppercase tracking-wider font-bold text-inkSoft" data-i18n="ifaceCashLabel">Cash Reward</span>
-              <span id="iface-cash" class="font-display text-xl sm:text-2xl font-bold text-ink"></span>
-            </div>
+      <div class="topbar-actions">
+        <div class="pill-counter">
+          <span class="dot-live"></span>
+          <span id="homeCounterText">Codes restants : 101 / 101</span>
+        </div>
+
+        <div class="lang-toggle" role="group" aria-label="Language switcher">
+          <button type="button" class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
+          <button type="button" class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cozy Pastoral Hero -->
+    <section class="hero">
+      <svg class="hero-scene" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#cfe7fb" />
+            <stop offset="65%" stop-color="#f8e5ec" />
+            <stop offset="100%" stop-color="#fef6ee" />
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="220" fill="url(#skyGrad)" />
+        <!-- Soft sun -->
+        <circle cx="960" cy="64" r="34" fill="#fff5d6" opacity="0.9" />
+        <!-- Pixel clouds -->
+        <g fill="#ffffff" opacity="0.85">
+          <rect x="140" y="38" width="90" height="18" rx="4" />
+          <rect x="162" y="26" width="46" height="14" rx="4" />
+          <rect x="520" y="48" width="110" height="18" rx="4" />
+          <rect x="545" y="35" width="56" height="15" rx="4" />
+        </g>
+        <!-- Rolling hills -->
+        <path d="M0 155 Q 260 105 560 150 T 1200 135 L 1200 220 L 0 220 Z" fill="#b9d8b3" />
+        <path d="M0 175 Q 340 135 690 172 T 1200 160 L 1200 220 L 0 220 Z" fill="#9bc595" />
+        <!-- Cozy Minecraft cottage -->
+        <g transform="translate(230, 96)">
+          <rect x="14" y="28" width="64" height="44" fill="#f3dfc8" stroke="#8a6c52" stroke-width="2" />
+          <polygon points="6,30 46,4 86,30" fill="#d9899e" stroke="#8a5062" stroke-width="2" />
+          <rect x="38" y="46" width="16" height="26" fill="#9c7354" />
+          <rect x="21" y="40" width="12" height="12" fill="#bfe0f7" />
+          <rect x="59" y="40" width="12" height="12" fill="#bfe0f7" />
+        </g>
+        <!-- Stylized block trees -->
+        <g transform="translate(820, 96)">
+          <rect x="22" y="40" width="12" height="32" fill="#8b6548" />
+          <rect x="4" y="14" width="48" height="30" rx="4" fill="#7fb084" />
+          <rect x="12" y="2" width="32" height="16" rx="4" fill="#96c49a" />
+        </g>
+        <g transform="translate(895, 108)">
+          <rect x="18" y="34" width="10" height="26" fill="#8b6548" />
+          <rect x="3" y="12" width="40" height="24" rx="4" fill="#88b88d" />
+        </g>
+        <!-- Wildflowers (sky blue & dusty rose) -->
+        <circle cx="360" cy="182" r="4" fill="#dc8ea4" />
+        <circle cx="374" cy="188" r="3.5" fill="#6ea8d8" />
+        <circle cx="680" cy="186" r="4" fill="#dc8ea4" />
+        <circle cx="702" cy="180" r="3.5" fill="#6ea8d8" />
+      </svg>
+
+      <div class="hero-body">
+        <div>
+          <span class="hero-tag" data-i18n="heroTag">Saison 1 • Ambiance Cosy &amp; Survie</span>
+          <h1 data-i18n="heroTitle">Choisis ton rang sur Peace SMP</h1>
+          <p data-i18n="heroDesc">
+            Une boutique douce et claire pour soutenir le serveur. Sélectionne d'abord le rang qui te correspond pour ouvrir son espace dédié, découvrir ses avantages et accéder à l'achat ou à la vérification de ton code.
+          </p>
+        </div>
+
+        <div class="hero-info-card">
+          <strong data-i18n="howTitle">Comment ça fonctionne ?</strong>
+          <ul class="hero-info-list">
+            <li data-i18n="how1">1. Clique sur « Choisir le rank » sur la carte de ton choix.</li>
+            <li data-i18n="how2">2. Ouvre l'interface du rang pour voir ses kits, bonus et le bouton Acheter.</li>
+            <li data-i18n="how3">3. Rejoins le Discord officiel avec Ego ou valide ton code unique.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOME VIEW: Rank Selection Cards (No Buy Button Here) -->
+    <main id="homeView">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="ranksHeading">Les Rangs Disponibles</h2>
+          <p data-i18n="ranksSubheading">Clique sur « Choisir le rank » pour ouvrir l'interface détaillée du rang.</p>
+        </div>
+      </div>
+
+      <section class="ranks-grid">
+        <!-- VIP -->
+        <article class="rank-card vip">
+          <div>
+            <span class="rank-pill">✦ VIP</span>
+            <h3 class="rank-name">Rank VIP</h3>
+            <p class="rank-tagline" data-i18n="vipTag">Idéal pour démarrer confortablement l'aventure.</p>
+            <ul class="rank-perks">
+              <li><span class="check-dot">✓</span><span data-i18n="vipP1">Kit VIP exclusif &amp; récompense en argent de départ</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="vipP2">Avantages survie pratiques et commandes de confort</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="vipP3">Petite chance d'obtenir la Divine Sword (sans garantie)</span></li>
+            </ul>
+          </div>
+          <button type="button" class="btn-choose" onclick="openRankDetail('vip')" data-i18n="chooseBtn">Choisir le rank</button>
+        </article>
+
+        <!-- PRO -->
+        <article class="rank-card pro">
+          <div>
+            <span class="rank-pill">✦ PRO</span>
+            <h3 class="rank-name">Rank Pro</h3>
+            <p class="rank-tagline" data-i18n="proTag">Un net pas en avant sur les kits, l'économie et les bonus.</p>
+            <ul class="rank-perks">
+              <li><span class="check-dot">✓</span><span data-i18n="proP1">Kit Pro renforcé + récompense en argent nettement supérieure</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="proP2">Nettement plus avantageux que le VIP au quotidien</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="proP3">Meilleures chances pour la Divine Sword (non garantie)</span></li>
+            </ul>
+          </div>
+          <button type="button" class="btn-choose" onclick="openRankDetail('pro')" data-i18n="chooseBtn">Choisir le rank</button>
+        </article>
+
+        <!-- ELITE -->
+        <article class="rank-card elite">
+          <div>
+            <span class="rank-pill">✦ ÉLITE</span>
+            <h3 class="rank-name">Rank Élite</h3>
+            <p class="rank-tagline" data-i18n="eliteTag">Le rang le plus complet avec les meilleures récompenses.</p>
+            <ul class="rank-perks">
+              <li><span class="check-dot">✓</span><span data-i18n="eliteP1">Kit Élite complet + plus grosse récompense en argent</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="eliteP2">Encore bien plus avantageux que Pro et VIP réunis</span></li>
+              <li><span class="check-dot">✓</span><span data-i18n="eliteP3">Chances les plus élevées pour la Divine Sword (non garantie)</span></li>
+            </ul>
+          </div>
+          <button type="button" class="btn-choose" onclick="openRankDetail('elite')" data-i18n="chooseBtn">Choisir le rank</button>
+        </article>
+      </section>
+    </main>
+
+    <!-- DEDICATED RANK INTERFACE (Opens when Choose Rank is clicked) -->
+    <section id="rankDetailView" class="rank-detail-view" aria-live="polite">
+      <div class="detail-topbar">
+        <button type="button" class="btn-back" onclick="closeRankDetail()" data-i18n="backBtn">← Retour aux rangs</button>
+        <div class="pill-counter" id="selectedRankPill">Rank sélectionné : VIP</div>
+      </div>
+
+      <div class="detail-grid">
+        <!-- Left: Full Rank Details + Buy Button -->
+        <div class="detail-box">
+          <h3 id="detailTitle">Rank VIP — Espace Dédié</h3>
+          <p id="detailSubtitle" style="color: var(--ink-muted); font-size: 0.9rem; margin-bottom: 14px;"></p>
+
+          <ul class="rank-perks" id="detailPerksList"></ul>
+
+          <div class="odds-note" id="detailOddsNote"></div>
+
+          <button type="button" class="btn-buy-main" onclick="revealBuyInfo()" data-i18n="buyBtn">Acheter ce rank</button>
+
+          <div class="discord-reveal" id="discordRevealBox">
+            <strong data-i18n="discordTitle">Finaliser l'achat sur Discord avec Ego</strong>
+            <p style="margin-top: 6px;" data-i18n="discordDesc">
+              Les paiements se font directement sur le Discord officiel de Peace SMP auprès du propriétaire <strong>Ego</strong>. Après validation, tu recevras ton code unique à usage unique.
+            </p>
+            <a class="discord-link" href="https://discord.gg/WD2rnS2p" target="_blank" rel="noopener noreferrer">
+              discord.gg/WD2rnS2p
+            </a>
+            <p style="font-size: 0.82rem; color: var(--ink-muted);" data-i18n="discordAfter">
+              Une fois ton code reçu, valide-le à droite pour récupérer ton code de jeu et utilise <code>/rank &lt;code&gt;</code> sur le serveur.
+            </p>
           </div>
         </div>
 
-        <!-- Rank Details Body -->
-        <div class="p-6 sm:p-9 space-y-8">
-          <!-- Scaling Kits, Cash & Divine Sword Odds Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- Kit Progression -->
-            <div class="rounded-2xl bg-creamWarm/70 p-5 border border-ink/10 space-y-2.5">
-              <span class="text-xs font-bold uppercase tracking-wider text-skyAccent" data-i18n="ifaceKitHeading">Scaling Kit</span>
-              <h3 id="iface-kit-name" class="font-display text-lg font-bold text-ink"></h3>
-              <p id="iface-kit-desc" class="text-sm text-inkSoft leading-relaxed"></p>
+        <!-- Right: Rank-Specific Verification & Remaining Pool Counter -->
+        <div class="detail-box">
+          <h3 data-i18n="verifyTitle">Vérification par code unique</h3>
+          <p style="color: var(--ink-muted); font-size: 0.87rem;" data-i18n="verifyDesc">
+            Entre le code de vérification reçu pour ce rang précis. Un code VIP ne fonctionne pas sur Pro ou Élite.
+          </p>
+
+          <form class="verify-form" onsubmit="verifyCode(event)">
+            <input
+              type="text"
+              id="codeInput"
+              class="verify-input"
+              placeholder="Ex: V101-K9M4-X7P2"
+              autocomplete="off"
+              required
+            />
+            <button type="submit" class="btn-verify" data-i18n="verifyBtn">Vérifier</button>
+          </form>
+
+          <div id="verifyFeedback" class="verify-feedback"></div>
+
+          <div class="counter-panel">
+            <strong data-i18n="poolTitle">Réserve totale des 101 codes de vérification</strong>
+            <div class="counter-badges">
+              <span class="c-badge" id="badgeTotal">Total : 101</span>
+              <span class="c-badge" id="badgeVip">VIP : 35</span>
+              <span class="c-badge" id="badgePro">Pro : 33</span>
+              <span class="c-badge" id="badgeElite">Élite : 33</span>
             </div>
-
-            <!-- Progression Advantage (Pro vs VIP / Élite vs Pro) -->
-            <div class="rounded-2xl bg-creamWarm/70 p-5 border border-ink/10 space-y-2.5">
-              <span class="text-xs font-bold uppercase tracking-wider text-roseDeep" data-i18n="ifaceAdvantageHeading">Tier Advantage</span>
-              <h3 id="iface-adv-title" class="font-display text-lg font-bold text-ink"></h3>
-              <p id="iface-adv-desc" class="text-sm text-inkSoft leading-relaxed"></p>
-            </div>
-
-            <!-- Divine Sword Odds + Explicit Non-Guarantee Note -->
-            <div class="rounded-2xl bg-creamWarm/70 p-5 border border-ink/10 space-y-2.5">
-              <span class="text-xs font-bold uppercase tracking-wider text-meadow" data-i18n="ifaceSwordHeading">Divine Sword Odds</span>
-              <p id="iface-sword-odds" class="font-display text-xl font-bold text-ink"></p>
-              <p id="iface-sword-desc" class="text-xs sm:text-sm text-inkSoft leading-relaxed"></p>
-              <p class="text-xs font-semibold text-roseDeep bg-roseSoft/70 px-3 py-2 rounded-xl border border-roseDust/30" data-i18n="swordNotGuaranteedNote">
-                Not guaranteed: Divine Sword is based on chance and is never promised or guaranteed with any rank.
-              </p>
-            </div>
-          </div>
-
-          <!-- Perks Checklist -->
-          <div class="rounded-2xl bg-parchment p-5 sm:p-6 border border-ink/10 space-y-3">
-            <h3 class="font-display text-lg font-bold text-ink" data-i18n="ifacePerksHeading">Included Perks & Features</h3>
-            <ul id="iface-perks-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-ink"></ul>
-          </div>
-
-          <!-- Rank-Specific Verification Code Checker (No plain-text code lists anywhere in HTML/JS) -->
-          <div class="rounded-2xl bg-creamWarm/65 p-5 sm:p-6 border border-ink/10 space-y-4">
-            <div class="space-y-1">
-              <h3 class="font-display text-lg font-bold text-ink" data-i18n="verifyTitle">Rank Verification Code Check</h3>
-              <p id="verify-helper-text" class="text-xs sm:text-sm text-inkSoft"></p>
-            </div>
-
-            <form onsubmit="handleCodeCheck(event)" class="flex flex-col sm:flex-row gap-3">
-              <label for="rank-code-input" class="sr-only" data-i18n="verifyInputLabel">Verification code</label>
-              <input
-                id="rank-code-input"
-                type="text"
-                autocomplete="off"
-                placeholder="VIP-XXXX-XXXX"
-                class="flex-1 px-4 py-3 rounded-2xl bg-white border border-ink/15 text-sm font-semibold text-ink placeholder:text-inkSoft/60 focus:outline-none focus:ring-2 focus:ring-skyAccent"
-              />
-              <button
-                type="submit"
-                class="px-5 py-3 rounded-2xl bg-ink hover:bg-skyAccent text-white text-sm font-bold transition-colors cursor-pointer shrink-0"
-                data-i18n="verifyBtn"
-              >
-                Verify Code
-              </button>
-            </form>
-
-            <div id="verify-result" class="hidden rounded-2xl px-4 py-3 text-xs sm:text-sm font-semibold border" role="status" aria-live="polite"></div>
-
-            <!-- Returned One-Time In-Game Code Card -->
-            <div id="redeem-code-card" class="hidden rounded-2xl bg-white p-4 sm:p-5 border border-meadow/45 shadow-sm space-y-3" role="region" aria-label="In-Game Redemption Code">
-              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <div>
-                  <span id="redeem-code-label" class="block text-[11px] font-bold uppercase tracking-wider text-meadow"></span>
-                  <p id="redeem-code-subtitle" class="text-xs text-inkSoft mt-0.5"></p>
-                </div>
-                <span id="redeem-code-rank-pill" class="self-start sm:self-center px-3 py-1 rounded-full bg-meadowSoft text-ink text-xs font-bold border border-meadow/30"></span>
-              </div>
-
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl bg-parchment px-4 py-3 border border-ink/10">
-                <code id="redeem-code-value" class="text-sm sm:text-base font-bold text-ink tracking-wide select-all"></code>
-                <button
-                  type="button"
-                  onclick="copyIssuedGameCode()"
-                  class="px-3.5 py-2 rounded-xl bg-skySoft hover:bg-skyAccent text-ink hover:text-white text-xs font-bold transition-colors cursor-pointer shrink-0"
-                >
-                  <span id="btn-copy-game-code"></span>
-                </button>
-              </div>
-
-              <p id="redeem-code-command-hint" class="text-xs font-semibold text-ink"></p>
-              <p id="redeem-copy-feedback" class="hidden text-xs font-bold text-meadow" role="status" aria-live="polite"></p>
-            </div>
-          </div>
-
-          <!-- Live Remaining Verification Codes Counter Panel (Dedicated Rank Interface) -->
-          <div class="rounded-2xl bg-skyMist/40 p-5 sm:p-6 border border-skyAccent/30 space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <div>
-                <span class="block text-[11px] font-bold uppercase tracking-wider text-skyAccent" data-i18n="counterPanelTag">Live Verification Code Counter</span>
-                <h3 class="font-display text-lg font-bold text-ink" data-i18n="counterPanelTitle">Remaining Verification Codes</h3>
-              </div>
-              <span id="counter-total-pill" class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-white text-ink text-xs font-bold border border-ink/10 shadow-sm"></span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="rounded-2xl bg-white p-4 border border-ink/10">
-                <span id="counter-rank-label" class="block text-xs font-bold uppercase tracking-wider text-roseDeep"></span>
-                <p id="counter-rank-value" class="font-display text-2xl font-bold text-ink mt-1"></p>
-                <p id="counter-rank-note" class="text-xs text-inkSoft mt-1"></p>
-              </div>
-
-              <div class="rounded-2xl bg-white p-4 border border-ink/10 flex flex-col justify-between gap-3">
-                <div>
-                  <span class="block text-xs font-bold uppercase tracking-wider text-skyAccent" data-i18n="counterAllLabel">All 3 Pools Breakdown</span>
-                  <p id="counter-all-breakdown" class="text-xs sm:text-sm font-semibold text-ink mt-1"></p>
-                </div>
-                <div class="flex flex-wrap items-center gap-2 pt-1">
-                  <button
-                    type="button"
-                    onclick="decrementActiveRankCounter()"
-                    class="px-3.5 py-2 rounded-xl bg-roseSoft hover:bg-roseDust text-roseDeep hover:text-white text-xs font-bold transition-colors cursor-pointer"
-                  >
-                    <span id="btn-mark-issued-text"></span>
-                  </button>
-                  <button
-                    type="button"
-                    onclick="resetVerificationCounters()"
-                    class="px-3.5 py-2 rounded-xl bg-creamWarm hover:bg-ink text-ink hover:text-white text-xs font-bold border border-ink/15 transition-colors cursor-pointer"
-                  >
-                    <span data-i18n="btnResetCounters">Reset 101 Pool</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <p id="counter-status-msg" class="text-xs font-semibold text-ink/90" role="status" aria-live="polite"></p>
-          </div>
-
-          <!-- Buy Action Area (Inside Rank Interface View) -->
-          <div class="pt-2 border-t border-ink/10 space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <p class="text-xs sm:text-sm text-inkSoft" data-i18n="buyPromptHint">
-                Ready to get this rank? Click Buy below to open the Discord purchase notice with owner Ego.
-              </p>
-              <button
-                id="iface-buy-btn"
-                type="button"
-                onclick="toggleDiscordCheckout()"
-                class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-roseDust hover:bg-roseDeep text-white text-sm font-bold shadow-sm transition-colors cursor-pointer"
-                data-i18n="buyBtn"
-              >
-                Buy
-              </button>
-            </div>
-
-            <!-- Revealed Discord Purchase Notice -->
-            <div id="discord-checkout-box" class="hidden rounded-2xl bg-roseSoft/60 border border-roseDust/40 p-5 sm:p-6 space-y-3" role="region" aria-label="Discord Purchase Instructions">
-              <h4 class="font-display text-lg font-bold text-ink" data-i18n="discordBoxTitle">Purchase via Discord with Owner Ego</h4>
-              <p id="discord-selected-rank-line" class="text-sm font-bold text-roseDeep"></p>
-              <p class="text-sm text-ink leading-relaxed" data-i18n="discordBoxDesc">
-                Rank purchases on Peace SMP are handled personally through Discord by the server owner, Ego. Join the server below, mention the rank you selected and your in-game Minecraft username, and wait for Ego to assist you.
-              </p>
-              <div class="flex flex-wrap items-center gap-3 pt-1">
-                <a
-                  href="https://discord.gg/WD2rnS2p"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-ink hover:bg-skyAccent text-white text-xs sm:text-sm font-bold transition-colors"
-                >
-                  <span>discord.gg/WD2rnS2p</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
-                <span class="text-xs font-semibold text-inkSoft" data-i18n="discordOwnerNote">Owner contact: Ego</span>
-              </div>
+            <div class="counter-actions">
+              <button type="button" class="btn-mini" onclick="decrementSelectedRank()" data-i18n="btnMinusOne">-1 code sur ce rang</button>
+              <button type="button" class="btn-mini" onclick="resetPool()" data-i18n="btnReset">Réinitialiser (101)</button>
             </div>
           </div>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-ink/10 bg-creamWarm/60 mt-14">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-inkSoft">
-      <p data-i18n="footerLeft">Peace SMP • Cozy Semi-Anarchy Minecraft Server</p>
-      <p data-i18n="footerRight">Divine Sword odds are chance-based and never guaranteed.</p>
-    </div>
-  </footer>
+    <!-- GitHub Pages Deployment Note -->
+    <footer class="guide-card">
+      <h3 data-i18n="guideTitle">Déploiement GitHub Pages &amp; Confidentialité des codes</h3>
+      <p data-i18n="guideText">
+        Ce fichier unique <code>index.html</code> est prêt pour GitHub Pages : dépose-le à la racine de ton dépôt public puis active GitHub Pages sur la branche principale. Aucune liste de codes en clair n'est exposée sur la page ; tes 101 codes restent privés de ton côté et s'activent en jeu via <code>/rank &lt;code&gt;</code> avec LuckPerms.
+      </p>
+    </footer>
+  </div>
 
   <script>
-    // Application state for language, active rank interface, session code checks, and remaining code counts
-    let currentLang = 'en';
-    let activeRank = 'VIP';
-    let lastIssuedGameCode = '';
-    const consumedSessionDigests = new Set();
-    const COUNTER_STORAGE_KEY = 'peacesmp_verification_remaining_v101';
-    const INITIAL_RANK_COUNTS = Object.freeze({
-      VIP: 35,
-      Pro: 33,
-      'Élite': 33
-    });
-    let remainingRankCounts = loadRemainingCounts();
+    const INITIAL_POOL = { vip: 35, pro: 33, elite: 33 };
+    const STORAGE_POOL_KEY = 'peacesmp_code_pool_101';
+    const STORAGE_USED_KEY = 'peacesmp_used_verif_codes';
 
-    // Load persisted remaining verification counts safely from localStorage
-    function loadRemainingCounts() {
+    let currentLang = 'fr';
+    let selectedRank = 'vip';
+
+    function loadPool() {
       try {
-        const raw = window.localStorage.getItem(COUNTER_STORAGE_KEY);
-        if (!raw) return { ...INITIAL_RANK_COUNTS };
+        const raw = localStorage.getItem(STORAGE_POOL_KEY);
+        if (!raw) return { ...INITIAL_POOL };
         const parsed = JSON.parse(raw);
-        const clampCount = (value, max) => {
-          const numeric = Number(value);
-          if (!Number.isFinite(numeric)) return max;
-          return Math.max(0, Math.min(max, Math.floor(numeric)));
-        };
-        return {
-          VIP: clampCount(parsed.VIP, INITIAL_RANK_COUNTS.VIP),
-          Pro: clampCount(parsed.Pro, INITIAL_RANK_COUNTS.Pro),
-          'Élite': clampCount(parsed['Élite'], INITIAL_RANK_COUNTS['Élite'])
-        };
-      } catch (_err) {
-        return { ...INITIAL_RANK_COUNTS };
-      }
+        if (typeof parsed.vip === 'number' && typeof parsed.pro === 'number' && typeof parsed.elite === 'number') {
+          return parsed;
+        }
+      } catch (e) {}
+      return { ...INITIAL_POOL };
     }
 
-    // Save remaining counts to localStorage
-    function saveRemainingCounts() {
+    function savePool(pool) {
+      localStorage.setItem(STORAGE_POOL_KEY, JSON.stringify(pool));
+      renderCounters();
+    }
+
+    function loadUsedSet() {
       try {
-        window.localStorage.setItem(COUNTER_STORAGE_KEY, JSON.stringify(remainingRankCounts));
-      } catch (_err) {
-        // Ignore storage errors in restricted browsing contexts
+        const raw = localStorage.getItem(STORAGE_USED_KEY);
+        return new Set(raw ? JSON.parse(raw) : []);
+      } catch (e) {
+        return new Set();
       }
     }
 
-    // Compute total remaining codes across all three rank pools (101 total: 35 VIP, 33 Pro, 33 Élite)
-    function getTotalRemainingCodes() {
-      return remainingRankCounts.VIP + remainingRankCounts.Pro + remainingRankCounts['Élite'];
+    function saveUsedSet(setObj) {
+      localStorage.setItem(STORAGE_USED_KEY, JSON.stringify([...setObj]));
     }
 
-    // Render both the home counter badge and the detailed counter panel inside the rank view
-    function renderRemainingCounters(statusFeedback = '') {
-      const totalRem = getTotalRemainingCodes();
-      const vipRem = remainingRankCounts.VIP;
-      const proRem = remainingRankCounts.Pro;
-      const eliteRem = remainingRankCounts['Élite'];
-      const rankRem = remainingRankCounts[activeRank] ?? 0;
-      const rankMax = INITIAL_RANK_COUNTS[activeRank] ?? 0;
-
-      const homeSummary = document.getElementById('home-remaining-summary');
-      const homeBreakdown = document.getElementById('home-remaining-breakdown');
-      if (homeSummary) {
-        homeSummary.textContent = currentLang === 'fr'
-          ? `${totalRem} / 101 codes de vérification restants au total`
-          : `${totalRem} / 101 verification codes remaining overall`;
-      }
-      if (homeBreakdown) {
-        homeBreakdown.textContent = currentLang === 'fr'
-          ? `VIP : ${vipRem}/${INITIAL_RANK_COUNTS.VIP} • Pro : ${proRem}/${INITIAL_RANK_COUNTS.Pro} • Élite : ${eliteRem}/${INITIAL_RANK_COUNTS['Élite']}`
-          : `VIP: ${vipRem}/${INITIAL_RANK_COUNTS.VIP} • Pro: ${proRem}/${INITIAL_RANK_COUNTS.Pro} • Élite: ${eliteRem}/${INITIAL_RANK_COUNTS['Élite']}`;
-      }
-
-      const totalPill = document.getElementById('counter-total-pill');
-      const rankLabel = document.getElementById('counter-rank-label');
-      const rankValue = document.getElementById('counter-rank-value');
-      const rankNote = document.getElementById('counter-rank-note');
-      const allBreakdown = document.getElementById('counter-all-breakdown');
-      const markIssuedText = document.getElementById('btn-mark-issued-text');
-      const statusEl = document.getElementById('counter-status-msg');
-
-      if (totalPill) {
-        totalPill.textContent = currentLang === 'fr'
-          ? `Total : ${totalRem} / 101 restants`
-          : `Total: ${totalRem} / 101 left`;
-      }
-      if (rankLabel) {
-        rankLabel.textContent = currentLang === 'fr'
-          ? `Codes restants — ${activeRank}`
-          : `Remaining Codes — ${activeRank}`;
-      }
-      if (rankValue) {
-        rankValue.textContent = `${rankRem} / ${rankMax}`;
-      }
-      if (rankNote) {
-        rankNote.textContent = currentLang === 'fr'
-          ? `Codes de vérification ${activeRank} encore disponibles dans le stock privé.`
-          : `${activeRank} verification codes still available in the private pool.`;
-      }
-      if (allBreakdown) {
-        allBreakdown.textContent = currentLang === 'fr'
-          ? `VIP : ${vipRem}/${INITIAL_RANK_COUNTS.VIP} • Pro : ${proRem}/${INITIAL_RANK_COUNTS.Pro} • Élite : ${eliteRem}/${INITIAL_RANK_COUNTS['Élite']}`
-          : `VIP: ${vipRem}/${INITIAL_RANK_COUNTS.VIP} • Pro: ${proRem}/${INITIAL_RANK_COUNTS.Pro} • Élite: ${eliteRem}/${INITIAL_RANK_COUNTS['Élite']}`;
-      }
-      if (markIssuedText) {
-        markIssuedText.textContent = currentLang === 'fr'
-          ? `-1 code ${activeRank} donné/utilisé`
-          : `-1 ${activeRank} code issued/used`;
-      }
-      if (statusEl && statusFeedback) {
-        statusEl.textContent = statusFeedback;
-      }
-    }
-
-    // Decrement remaining counter for a given rank by 1 if above zero
-    function decrementRankCounter(rankName, sourceLabel = '') {
-      try {
-        const target = rankInfo[rankName] ? rankName : activeRank;
-        if (remainingRankCounts[target] <= 0) {
-          const msg = currentLang === 'fr'
-            ? `Plus aucun code ${target} restant dans le compteur (0/${INITIAL_RANK_COUNTS[target]}).`
-            : `No ${target} codes remaining in the counter (0/${INITIAL_RANK_COUNTS[target]}).`;
-          renderRemainingCounters(msg);
-          return false;
-        }
-        remainingRankCounts[target] -= 1;
-        saveRemainingCounts();
-        const msg = currentLang === 'fr'
-          ? `Compteur mis à jour (${sourceLabel || 'manuel'}) : ${remainingRankCounts[target]}/${INITIAL_RANK_COUNTS[target]} codes ${target} restants (${getTotalRemainingCodes()}/101 au total).`
-          : `Counter updated (${sourceLabel || 'manual'}): ${remainingRankCounts[target]}/${INITIAL_RANK_COUNTS[target]} ${target} codes remaining (${getTotalRemainingCodes()}/101 total).`;
-        renderRemainingCounters(msg);
-        return true;
-      } catch (err) {
-        console.error('Failed to decrement rank counter:', err);
-        return false;
-      }
-    }
-
-    // Decrement active rank counter from the "-1" button
-    function decrementActiveRankCounter() {
-      decrementRankCounter(activeRank, currentLang === 'fr' ? 'action admin' : 'admin action');
-    }
-
-    // Reset all counters back to 101 total (35 VIP, 33 Pro, 33 Élite)
-    function resetVerificationCounters() {
-      try {
-        remainingRankCounts = { ...INITIAL_RANK_COUNTS };
-        consumedSessionDigests.clear();
-        saveRemainingCounts();
-        const msg = currentLang === 'fr'
-          ? 'Compteurs réinitialisés à 101 codes (35 VIP, 33 Pro, 33 Élite).'
-          : 'Counters reset to 101 codes (35 VIP, 33 Pro, 33 Élite).';
-        renderRemainingCounters(msg);
-      } catch (err) {
-        console.error('Failed to reset verification counters:', err);
-      }
-    }
-
-    // Rank progression data (scaling kits, cash rewards, clear advantages over lower rank, Divine Sword odds)
-    const rankInfo = {
-      VIP: {
-        expectedPrefixes: ['VIP', 'PVIP', 'V101', 'V'],
-        en: {
-          badge: 'Rank 1 • Starter Tier',
-          title: 'VIP Rank Interface',
-          subtitle: 'A cozy, practical starting rank for players easing into Peace SMP.',
-          cash: '$25,000 Starting Cash',
-          kitName: 'Pastoral Starter Kit',
-          kitDesc: 'Iron equipment set, food provisions, torch stack, and basic survival supplies to settle in smoothly.',
-          advTitle: 'Foundation Boost',
-          advDesc: 'Establishes your base perks, extra home slot, and a welcoming boost without overwhelming early survival.',
-          swordOdds: '2% Divine Sword Chance',
-          swordDesc: 'Small roll chance toward a Divine Sword drop or crate roll on eligible events.',
-          perks: [
-            'Pastoral Starter Kit (24h cooldown)',
-            '$25,000 in-game cash reward',
-            '2 extra /sethome slots',
-            '2% Divine Sword roll chance (not guaranteed)'
-          ]
-        },
-        fr: {
-          badge: 'Rang 1 • Palier de Départ',
-          title: 'Interface du Rank VIP',
-          subtitle: 'Un rang cosy et pratique pour bien démarrer sur Peace SMP.',
-          cash: '25 000 $ de départ',
-          kitName: 'Kit Pastoral de Départ',
-          kitDesc: 'Équipement en fer, vivres, torches et ressources essentielles pour s’installer tranquillement.',
-          advTitle: 'Boost de Fondation',
-          advDesc: 'Pose les bases de tes avantages, un emplacement de maison supplémentaire et un coup de pouce équilibré.',
-          swordOdds: '2 % de chance — Divine Sword',
-          swordDesc: 'Faible probabilité de tenter l’obtention d’une Divine Sword lors des tirages éligibles.',
-          perks: [
-            'Kit Pastoral de Départ (recharge 24 h)',
-            'Récompense en argent de 25 000 $',
-            '2 emplacements /sethome en plus',
-            '2 % de chance pour la Divine Sword (non garantie)'
-          ]
-        }
-      },
-      Pro: {
-        expectedPrefixes: ['PRO', 'PPRO', 'P'],
-        en: {
-          badge: 'Rank 2 • Clear Step Up Over VIP',
-          title: 'Pro Rank Interface',
-          subtitle: 'Noticeably stronger than VIP with upgraded gear, higher cash, and better odds.',
-          cash: '$75,000 Cash Reward',
-          kitName: 'Frontier Pro Kit',
-          kitDesc: 'Upgraded diamond/enchanted survival kit, extra food reserves, and stronger travel & utility items.',
-          advTitle: 'Clear Advantage Over VIP',
-          advDesc: 'Delivers 3x the cash reward of VIP, stronger kit durability, more /sethome slots, and more than double the Divine Sword odds.',
-          swordOdds: '5% Divine Sword Chance',
-          swordDesc: 'Improved chance compared to VIP on eligible Divine Sword rolls.',
-          perks: [
-            'Frontier Pro Kit (stronger than VIP kit)',
-            '$75,000 in-game cash reward (3x VIP)',
-            '5 total /sethome slots & /enderchest access',
-            '5% Divine Sword roll chance (not guaranteed)'
-          ]
-        },
-        fr: {
-          badge: 'Rang 2 • Net Progrès sur VIP',
-          title: 'Interface du Rank Pro',
-          subtitle: 'Nettement supérieur au VIP avec un meilleur kit, plus d’argent et de meilleures chances.',
-          cash: '75 000 $ de récompense',
-          kitName: 'Kit Frontière Pro',
-          kitDesc: 'Kit de survie amélioré avec équipement renforcé, réserves de nourriture et outils plus complets.',
-          advTitle: 'Avantage Net sur le VIP',
-          advDesc: 'Offre 3 fois plus d’argent que le VIP, un kit plus solide, plus de /sethome et plus du double des chances pour la Divine Sword.',
-          swordOdds: '5 % de chance — Divine Sword',
-          swordDesc: 'Probabilité renforcée par rapport au VIP sur les tirages éligibles de la Divine Sword.',
-          perks: [
-            'Kit Frontière Pro (meilleur que le kit VIP)',
-            'Récompense en argent de 75 000 $ (3x VIP)',
-            '5 emplacements /sethome & accès /enderchest',
-            '5 % de chance pour la Divine Sword (non garantie)'
-          ]
-        }
-      },
-      'Élite': {
-        expectedPrefixes: ['ELITE', 'ÉLITE', 'PELT', 'E'],
-        en: {
-          badge: 'Rank 3 • Top Tier Advantage Over Pro',
-          title: 'Élite Rank Interface',
-          subtitle: 'Our top rank with major advantages over Pro, top cash payouts, and highest odds.',
-          cash: '$180,000 Cash Reward',
-          kitName: 'Sovereign Élite Kit',
-          kitDesc: 'Top-tier full kit with prime tools, generous provisions, and maximum convenience for semi-anarchy play.',
-          advTitle: 'Major Advantage Over Pro',
-          advDesc: 'Steps well ahead of Pro with $180,000 cash, our strongest kit tier, expanded homes, and the highest Divine Sword chance.',
-          swordOdds: '10% Divine Sword Chance',
-          swordDesc: 'Highest roll chance among all ranks on eligible Divine Sword drops.',
-          perks: [
-            'Sovereign Élite Kit (strongest kit tier)',
-            '$180,000 in-game cash reward (highest tier)',
-            '10 total /sethome slots & priority convenience perks',
-            '10% Divine Sword roll chance (not guaranteed)'
-          ]
-        },
-        fr: {
-          badge: 'Rang 3 • Avantage Majeur sur Pro',
-          title: 'Interface du Rank Élite',
-          subtitle: 'Le rang le plus élevé avec un net avantage sur Pro, le meilleur cash et les meilleures chances.',
-          cash: '180 000 $ de récompense',
-          kitName: 'Kit Souverain Élite',
-          kitDesc: 'Kit maximal avec équipement de premier plan, vivres généreuses et confort complet en semi-anarchie.',
-          advTitle: 'Avantage Majeur sur le Pro',
-          advDesc: 'Dépasse nettement le rang Pro avec 180 000 $, le meilleur kit, davantage de /sethome et les meilleures chances pour la Divine Sword.',
-          swordOdds: '10 % de chance — Divine Sword',
-          swordDesc: 'Meilleure probabilité parmi les rangs sur les tirages éligibles de la Divine Sword.',
-          perks: [
-            'Kit Souverain Élite (palier de kit le plus élevé)',
-            'Récompense en argent de 180 000 $ (maximum)',
-            '10 emplacements /sethome & avantages de confort max',
-            '10 % de chance pour la Divine Sword (non garantie)'
-          ]
-        }
-      }
-    };
-
-    // Bilingual UI dictionary (EN / FR)
     const i18n = {
-      en: {
-        headerSubtitle: 'Cozy Semi-Anarchy • Pastoral Realm',
-        navAbout: 'About',
-        navRanks: 'Ranks',
-        navDeploy: 'GitHub Pages',
-        heroPill: 'Peaceful Valleys • Untamed Semi-Anarchy',
-        heroTitle: 'A warm, unhurried world where quiet builds meet wild frontiers.',
-        heroDesc: 'Peace SMP brings together calm pastoral horizons, balanced progression, and semi-anarchy freedom in a welcoming space designed for everyone. Explore at your own pace, earn rewards, or inspect each rank before deciding.',
-        ipLabel: 'Server Address',
-        copyIpBtn: 'Copy IP',
-        exploreRanksBtn: 'Explore Ranks',
-        homeCounterTag: 'Verification Stock',
-        homeCounterBadge: 'Codes Private',
-        aboutTag: 'Server Overview',
-        aboutTitle: 'Built for calm exploration and spirited semi-anarchy',
-        aboutDesc: 'Peace SMP keeps things welcoming without sacrificing frontier excitement. Gather resources, trade, build peaceful sanctuaries, and step into semi-anarchy adventures at your own rhythm.',
-        pillar1Title: 'Welcoming & Gender-Neutral',
-        pillar1Desc: 'A friendly, balanced atmosphere where every player feels right at home, whether you prefer quiet farming or bold raids.',
-        pillar2Title: 'Semi-Anarchy Freedom',
-        pillar2Desc: 'Unscripted stories unfold naturally across the map. Keep your gear sharp, scout wisely, and enjoy authentic survival tension.',
-        pillar3Title: 'Steady Rank Progression',
-        pillar3Desc: 'VIP, Pro, and Élite scale up thoughtfully with kits, cash rewards, stronger utilities, and chance-based Divine Sword odds.',
-        ranksTag: 'Server Ranks',
-        ranksTitle: 'Choose a rank to open its full interface',
-        ranksDesc: 'Select VIP, Pro, or Élite below to view its kit tier, cash reward, advantages, Divine Sword chance, code checker, and purchase option inside the dedicated rank view.',
-        vipTagline: 'Starter Boost',
-        vipCardSummary: 'A gentle head start with a balanced starter kit, modest cash reward, and entry-level Divine Sword odds.',
-        proTagline: 'Clear Step Up',
-        proCardSummary: 'Noticeably stronger gear and cash rewards over VIP, smoother quality-of-life perks, and higher Divine Sword odds.',
-        eliteTagline: 'Top Tier Edge',
-        eliteCardSummary: 'Our highest progression tier with major advantages over Pro, top cash payouts, and peak Divine Sword odds.',
-        chooseRankBtn: 'Choose Rank',
-        deployTag: 'GitHub Pages Guide',
-        deployTitle: 'Publish Peace SMP with GitHub Pages',
-        deployDesc: 'Because this entire site lives in a single self-contained index.html file, hosting it on GitHub Pages takes only a few minutes.',
-        step1Label: 'Step 1',
-        step1Title: 'Create a Repository',
-        step1Desc: 'Create a new public repository on GitHub and upload this file named exactly index.html at the root.',
-        step2Label: 'Step 2',
-        step2Title: 'Enable GitHub Pages',
-        step2Desc: 'Open Settings → Pages, choose Deploy from a branch, select main and / (root), then save.',
-        step3Label: 'Step 3',
-        step3Title: 'Share & Keep Codes Private',
-        step3Desc: 'Visit your published Pages URL. Never paste plain-text verification code lists inside HTML files.',
-        backToHomeBtn: 'Back to Home',
-        ifaceCashLabel: 'Cash Reward',
-        ifaceKitHeading: 'Scaling Kit',
-        ifaceAdvantageHeading: 'Tier Advantage',
-        ifaceSwordHeading: 'Divine Sword Odds',
-        swordNotGuaranteedNote: 'Not guaranteed: Divine Sword is based on chance and is never promised or guaranteed with any rank.',
-        ifacePerksHeading: 'Included Perks & Features',
-        verifyTitle: 'Rank Verification Code Check',
-        verifyInputLabel: 'Verification code',
-        verifyBtn: 'Verify Code',
-        counterPanelTag: 'Live Verification Code Counter',
-        counterPanelTitle: 'Remaining Verification Codes',
-        counterAllLabel: 'All 3 Pools Breakdown',
-        btnResetCounters: 'Reset 101 Pool',
-        buyPromptHint: 'Ready to get this rank? Click Buy below to open the Discord purchase notice with owner Ego.',
-        buyBtn: 'Buy',
-        discordBoxTitle: 'Purchase via Discord with Owner Ego',
-        discordBoxDesc: 'Rank purchases on Peace SMP are handled personally through Discord by the server owner, Ego. Join the server below, mention the rank you selected and your in-game Minecraft username, and wait for Ego to assist you.',
-        discordOwnerNote: 'Owner contact: Ego',
-        footerLeft: 'Peace SMP • Cozy Semi-Anarchy Minecraft Server',
-        footerRight: 'Divine Sword odds are chance-based and never guaranteed.'
-      },
       fr: {
-        headerSubtitle: 'Semi-Anarchie Cosy • Univers Pastoral',
-        navAbout: 'À propos',
-        navRanks: 'Ranks',
-        navDeploy: 'GitHub Pages',
-        heroPill: 'Vallées Paisibles • Semi-Anarchie Libre',
-        heroTitle: 'Un monde chaleureux où les constructions paisibles côtoient les grands espaces.',
-        heroDesc: 'Peace SMP réunit des horizons pastoraux apaisants, une progression équilibrée et la liberté semi-anarchie dans un cadre accueillant pour tout le monde. Avance à ton rythme, gagne des récompenses et découvre chaque rank avant de choisir.',
-        ipLabel: 'Adresse du Serveur',
-        copyIpBtn: 'Copier l’IP',
-        exploreRanksBtn: 'Découvrir les Ranks',
-        homeCounterTag: 'Stock de Vérification',
-        homeCounterBadge: 'Codes Privés',
-        aboutTag: 'Présentation du Serveur',
-        aboutTitle: 'Pensé pour l’exploration calme et la semi-anarchie vivante',
-        aboutDesc: 'Peace SMP garde une ambiance accueillante sans perdre le frisson de l’aventure. Récolte, échange, bâtis ton coin tranquille et vis la semi-anarchie à ta façon.',
-        pillar1Title: 'Accueillant & Mixte',
-        pillar1Desc: 'Une ambiance chaleureuse et équilibrée où chacun se sent bien, que tu préfères la vie paisible ou l’aventure.',
-        pillar2Title: 'Liberté Semi-Anarchie',
-        pillar2Desc: 'Les histoires s’écrivent naturellement sur la carte. Garde ton équipement prêt, explore prudemment et profite du jeu.',
-        pillar3Title: 'Progression Claire',
-        pillar3Desc: 'VIP, Pro et Élite montent en puissance avec des kits progressifs, du cash, des avantages utiles et des chances pour la Divine Sword.',
-        ranksTag: 'Ranks du Serveur',
-        ranksTitle: 'Choisis un rank pour ouvrir son interface',
-        ranksDesc: 'Clique sur Choisir le rank pour VIP, Pro ou Élite afin d’ouvrir son interface dédiée avec son kit, son cash, ses avantages, ses chances de Divine Sword, la vérification de code et le bouton Acheter.',
-        vipTagline: 'Élan de Départ',
-        vipCardSummary: 'Un démarrage doux avec un kit de base équilibré, une récompense en argent et une première chance pour la Divine Sword.',
-        proTagline: 'Net Progrès',
-        proCardSummary: 'Plus fort que le VIP avec un meilleur kit, plus d’argent, des avantages pratiques et de meilleures chances pour la Divine Sword.',
-        eliteTagline: 'Avantage Maximal',
-        eliteCardSummary: 'Le palier le plus élevé avec un net avantage sur Pro, le plus gros cash et les meilleures chances pour la Divine Sword.',
-        chooseRankBtn: 'Choisir le rank',
-        deployTag: 'Guide GitHub Pages',
-        deployTitle: 'Publier Peace SMP sur GitHub Pages',
-        deployDesc: 'Comme tout le site tient dans un seul fichier index.html autonome, la mise en ligne sur GitHub Pages prend quelques minutes.',
-        step1Label: 'Étape 1',
-        step1Title: 'Créer un Dépôt',
-        step1Desc: 'Crée un dépôt public sur GitHub et dépose ce fichier nommé exactement index.html à la racine.',
-        step2Label: 'Étape 2',
-        step2Title: 'Activer GitHub Pages',
-        step2Desc: 'Va dans Settings → Pages, choisis Deploy from a branch, sélectionne main et / (root), puis enregistre.',
-        step3Label: 'Étape 3',
-        step3Title: 'Partager & Garder les Codes Privés',
-        step3Desc: 'Ouvre ton lien GitHub Pages. N’inscris jamais de listes de codes en clair dans les fichiers HTML.',
-        backToHomeBtn: 'Retour à l’accueil',
-        ifaceCashLabel: 'Récompense Cash',
-        ifaceKitHeading: 'Kit Progressif',
-        ifaceAdvantageHeading: 'Avantage du Palier',
-        ifaceSwordHeading: 'Chances Divine Sword',
-        swordNotGuaranteedNote: 'Non garanti : la Divine Sword repose sur la chance et n’est jamais promise ni garantie avec aucun rank.',
-        ifacePerksHeading: 'Avantages Inclus',
-        verifyTitle: 'Vérification du Code par Rang',
-        verifyInputLabel: 'Code de vérification',
-        verifyBtn: 'Vérifier le code',
-        counterPanelTag: 'Compteur de Codes en Direct',
-        counterPanelTitle: 'Codes de Vérification Restants',
-        counterAllLabel: 'Répartition des 3 Rangs',
-        btnResetCounters: 'Réinitialiser (101)',
-        buyPromptHint: 'Tu veux ce rank ? Clique sur Acheter ci-dessous pour afficher les infos Discord avec le propriétaire Ego.',
-        buyBtn: 'Acheter',
-        discordBoxTitle: 'Achat sur Discord avec le Propriétaire Ego',
-        discordBoxDesc: 'Les achats de ranks sur Peace SMP se font directement sur Discord auprès du propriétaire, Ego. Rejoins le serveur ci-dessous, précise le rank choisi ainsi que ton pseudo Minecraft, et attends la réponse d’Ego.',
-        discordOwnerNote: 'Contact propriétaire : Ego',
-        footerLeft: 'Peace SMP • Serveur Minecraft Semi-Anarchie Cosy',
-        footerRight: 'Les chances de Divine Sword dépendent du hasard et ne sont jamais garanties.'
+        brandSub: 'Aventure Survie & Ranks • Java & Bedrock',
+        heroTag: 'Saison 1 • Ambiance Cosy & Survie',
+        heroTitle: 'Choisis ton rang sur Peace SMP',
+        heroDesc: "Une boutique douce et claire pour soutenir le serveur. Sélectionne d'abord le rang qui te correspond pour ouvrir son espace dédié, découvrir ses avantages et accéder à l'achat ou à la vérification de ton code.",
+        howTitle: 'Comment ça fonctionne ?',
+        how1: '1. Clique sur « Choisir le rank » sur la carte de ton choix.',
+        how2: "2. Ouvre l'interface du rang pour voir ses kits, bonus et le bouton Acheter.",
+        how3: '3. Rejoins le Discord officiel avec Ego ou valide ton code unique.',
+        ranksHeading: 'Les Rangs Disponibles',
+        ranksSubheading: "Clique sur « Choisir le rank » pour ouvrir l'interface détaillée du rang.",
+        chooseBtn: 'Choisir le rank',
+        backBtn: '← Retour aux rangs',
+        buyBtn: 'Acheter ce rank',
+        discordTitle: "Finaliser l'achat sur Discord avec Ego",
+        discordDesc: 'Les paiements se font directement sur le Discord officiel de Peace SMP auprès du propriétaire <strong>Ego</strong>. Après validation, tu recevras ton code unique à usage unique.',
+        discordAfter: 'Une fois ton code reçu, valide-le à droite pour récupérer ton code de jeu et utilise <code>/rank &lt;code&gt;</code> sur le serveur.',
+        verifyTitle: 'Vérification par code unique',
+        verifyDesc: 'Entre le code de vérification reçu pour ce rang précis. Un code VIP ne fonctionne pas sur Pro ou Élite.',
+        verifyBtn: 'Vérifier',
+        poolTitle: 'Réserve totale des 101 codes de vérification',
+        btnMinusOne: '-1 code sur ce rang',
+        btnReset: 'Réinitialiser (101)',
+        guideTitle: 'Déploiement GitHub Pages & Confidentialité des codes',
+        guideText: "Ce fichier unique <code>index.html</code> est prêt pour GitHub Pages : dépose-le à la racine de ton dépôt public puis active GitHub Pages sur la branche principale. Aucune liste de codes en clair n'est exposée sur la page ; tes 101 codes restent privés de ton côté et s'activent en jeu via <code>/rank &lt;code&gt;</code> avec LuckPerms.",
+        vipTag: "Idéal pour démarrer confortablement l'aventure.",
+        vipP1: 'Kit VIP exclusif & récompense en argent de départ',
+        vipP2: 'Avantages survie pratiques et commandes de confort',
+        vipP3: "Petite chance d'obtenir la Divine Sword (sans garantie)",
+        proTag: "Un net pas en avant sur les kits, l'économie et les bonus.",
+        proP1: 'Kit Pro renforcé + récompense en argent nettement supérieure',
+        proP2: 'Nettement plus avantageux que le VIP au quotidien',
+        proP3: 'Meilleures chances pour la Divine Sword (non garantie)',
+        eliteTag: 'Le rang le plus complet avec les meilleures récompenses.',
+        eliteP1: 'Kit Élite complet + plus grosse récompense en argent',
+        eliteP2: 'Encore bien plus avantageux que Pro et VIP réunis',
+        eliteP3: 'Chances les plus élevées pour la Divine Sword (non garantie)',
+        ranks: {
+          vip: {
+            title: 'Rank VIP — Interface Dédiée',
+            pill: 'Rank sélectionné : VIP',
+            sub: 'Le premier palier cosy pour bien débuter sur Peace SMP avec un kit dédié et un bonus en argent.',
+            perks: [
+              'Kit VIP exclusif utilisable en survie',
+              'Récompense en argent créditée sur ton compte en jeu',
+              'Préfixe VIP et commandes pratiques de confort',
+              'Accès aux chances de base pour tenter la Divine Sword'
+            ],
+            odds: 'Chance Divine Sword (VIP) : faible probabilité bonus — la Divine Sword n’est jamais garantie.'
+          },
+          pro: {
+            title: 'Rank Pro — Interface Dédiée',
+            pill: 'Rank sélectionné : PRO',
+            sub: 'Une progression marquée par rapport au VIP : kit supérieur, beaucoup plus d’argent et meilleurs bonus.',
+            perks: [
+              'Kit Pro amélioré nettement plus puissant que le Kit VIP',
+              'Récompense en argent bien plus élevée que le palier VIP',
+              'Avantages survie étendus et confort de jeu supérieur',
+              'Probabilité augmentée pour la Divine Sword par rapport au VIP'
+            ],
+            odds: 'Chance Divine Sword (Pro) : probabilité améliorée — la Divine Sword reste aléatoire et non garantie.'
+          },
+          elite: {
+            title: 'Rank Élite — Interface Dédiée',
+            pill: 'Rank sélectionné : ÉLITE',
+            sub: 'L’expérience ultime de Peace SMP : le meilleur kit, la plus grande somme d’argent et les plus hautes chances.',
+            perks: [
+              'Kit Élite complet — largement au-dessus des kits VIP et Pro',
+              'Récompense en argent maximale pour dominer l’économie',
+              'Tous les privilèges de confort et prestige maximal sur le serveur',
+              'Plus fortes chances du serveur d’obtenir la Divine Sword'
+            ],
+            odds: 'Chance Divine Sword (Élite) : meilleures chances disponibles — la Divine Sword n’est toutefois pas garantie.'
+          }
+        }
+      },
+      en: {
+        brandSub: 'Survival Adventure & Ranks • Java & Bedrock',
+        heroTag: 'Season 1 • Cozy Survival Vibes',
+        heroTitle: 'Choose your rank on Peace SMP',
+        heroDesc: 'A warm, straightforward shop to support the server. Select your preferred rank first to open its dedicated view, inspect its perks, and access purchase instructions or code verification.',
+        howTitle: 'How does it work?',
+        how1: '1. Click "Choose Rank" on the rank card you want.',
+        how2: '2. Open the dedicated rank view to inspect kits, cash rewards, and the Buy button.',
+        how3: '3. Join the official Discord with Ego or verify your one-time code.',
+        ranksHeading: 'Available Ranks',
+        ranksSubheading: 'Click "Choose Rank" to open the dedicated interface for that tier.',
+        chooseBtn: 'Choose Rank',
+        backBtn: '← Back to ranks',
+        buyBtn: 'Buy this rank',
+        discordTitle: 'Complete your purchase on Discord with Ego',
+        discordDesc: 'All purchases are handled directly on the official Peace SMP Discord with owner <strong>Ego</strong>. Once confirmed, you will receive your unique one-time verification code.',
+        discordAfter: 'After receiving your code, validate it on the right to receive your in-game code and run <code>/rank &lt;code&gt;</code> on the server.',
+        verifyTitle: 'One-Time Code Verification',
+        verifyDesc: 'Enter the verification code issued for this exact rank. A VIP code will not work on Pro or Élite.',
+        verifyBtn: 'Verify',
+        poolTitle: 'Total 101 Verification Code Pool',
+        btnMinusOne: '-1 code for this rank',
+        btnReset: 'Reset (101)',
+        guideTitle: 'GitHub Pages Deployment & Code Privacy',
+        guideText: 'This single <code>index.html</code> file is ready for GitHub Pages: upload it to the root of your repository and enable GitHub Pages on your main branch. No plain-text code lists are exposed on the page; your 101 codes remain private and redeem in-game via <code>/rank &lt;code&gt;</code> with LuckPerms.',
+        vipTag: 'A cozy starting boost for your survival journey.',
+        vipP1: 'Exclusive VIP kit & starter cash reward',
+        vipP2: 'Handy survival perks and comfort commands',
+        vipP3: 'Small chance to obtain the Divine Sword (not guaranteed)',
+        proTag: 'A clear step up in kits, economy cash, and daily perks.',
+        proP1: 'Upgraded Pro kit + significantly higher cash reward',
+        proP2: 'Noticeably stronger everyday advantages than VIP',
+        proP3: 'Better odds for the Divine Sword (not guaranteed)',
+        eliteTag: 'The fullest tier with top kits, cash, and highest odds.',
+        eliteP1: 'Complete Élite kit + largest cash reward',
+        eliteP2: 'Substantially more advantageous than both Pro and VIP',
+        eliteP3: 'Highest odds for the Divine Sword (not guaranteed)',
+        ranks: {
+          vip: {
+            title: 'VIP Rank — Dedicated Interface',
+            pill: 'Selected Rank: VIP',
+            sub: 'The welcoming first tier to start strong on Peace SMP with a dedicated kit and cash bonus.',
+            perks: [
+              'Exclusive VIP survival kit',
+              'In-game cash reward added to your balance',
+              'VIP prefix and quality-of-life commands',
+              'Base chance to roll the Divine Sword'
+            ],
+            odds: 'Divine Sword Odds (VIP): low bonus chance — the Divine Sword is never guaranteed.'
+          },
+          pro: {
+            title: 'Pro Rank — Dedicated Interface',
+            pill: 'Selected Rank: PRO',
+            sub: 'A big leap over VIP with stronger gear, much higher cash rewards, and richer perks.',
+            perks: [
+              'Upgraded Pro kit noticeably stronger than VIP',
+              'Much larger cash reward than the VIP tier',
+              'Expanded survival perks and extra convenience',
+              'Improved Divine Sword odds compared to VIP'
+            ],
+            odds: 'Divine Sword Odds (Pro): improved chance — the Divine Sword remains random and not guaranteed.'
+          },
+          elite: {
+            title: 'Élite Rank — Dedicated Interface',
+            pill: 'Selected Rank: ÉLITE',
+            sub: 'The premier Peace SMP experience with top gear, maximum cash, and the best Divine Sword odds.',
+            perks: [
+              'Complete Élite kit — far above VIP and Pro gear',
+              'Largest in-game cash reward across all tiers',
+              'Full prestige perks and maximum server convenience',
+              'Highest server odds to obtain the Divine Sword'
+            ],
+            odds: 'Divine Sword Odds (Élite): highest available odds — the Divine Sword is still not guaranteed.'
+          }
+        }
       }
     };
 
-    // Lightweight non-reversible fingerprint so repeated identical inputs in one session can be detected
-    // without storing or exposing any plain-text verification codes in the page
-    function createSessionFingerprint(rawText) {
-      const normalized = rawText.trim().toUpperCase();
-      let h1 = 0x811c9dc5;
-      let h2 = 0x01000193;
-      for (let i = 0; i < normalized.length; i += 1) {
-        const ch = normalized.charCodeAt(i);
-        h1 ^= ch;
-        h1 = Math.imul(h1, 0x01000193);
-        h2 ^= ch + i;
-        h2 = Math.imul(h2, 0x85ebca6b);
-      }
-      return `${(h1 >>> 0).toString(16)}-${(h2 >>> 0).toString(16)}-${normalized.length}`;
+    function renderCounters() {
+      const pool = loadPool();
+      const total = pool.vip + pool.pro + pool.elite;
+      document.getElementById('homeCounterText').textContent =
+        currentLang === 'fr' ? `Codes restants : ${total} / 101` : `Remaining codes: ${total} / 101`;
+      document.getElementById('badgeTotal').textContent = `Total : ${total}`;
+      document.getElementById('badgeVip').textContent = `VIP : ${pool.vip}`;
+      document.getElementById('badgePro').textContent = `Pro : ${pool.pro}`;
+      document.getElementById('badgeElite').textContent = `${currentLang === 'fr' ? 'Élite' : 'Élite'} : ${pool.elite}`;
     }
 
-    // Generate a unique one-time in-game redemption code tied to the verified rank and verification digest
-    function buildOneTimeGameCode(rankName, digest) {
-      const rankPrefix = rankName === 'Élite' ? 'ELITE' : rankName.toUpperCase();
-      const pool = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-      const cleanDigest = digest.replace(/[^a-z0-9]/gi, '').toUpperCase();
-      let seed = 2166136261;
-      for (let i = 0; i < cleanDigest.length; i += 1) {
-        seed ^= cleanDigest.charCodeAt(i);
-        seed = Math.imul(seed, 16777619);
-      }
-      const makeBlock = (len) => {
-        let out = '';
-        for (let i = 0; i < len; i += 1) {
-          seed ^= seed << 13;
-          seed >>>= 0;
-          seed ^= seed >>> 17;
-          seed ^= seed << 5;
-          seed >>>= 0;
-          out += pool[seed % pool.length];
-        }
-        return out;
-      };
-      return `IG-${rankPrefix}-${makeBlock(4)}-${makeBlock(4)}`;
-    }
-
-    // Render the returned one-time in-game redemption code card in the active language
-    function renderIssuedGameCodeCard(gameCode, rankName) {
-      const card = document.getElementById('redeem-code-card');
-      const label = document.getElementById('redeem-code-label');
-      const subtitle = document.getElementById('redeem-code-subtitle');
-      const pill = document.getElementById('redeem-code-rank-pill');
-      const valueEl = document.getElementById('redeem-code-value');
-      const copyBtnText = document.getElementById('btn-copy-game-code');
-      const cmdHint = document.getElementById('redeem-code-command-hint');
-      const copyFeedback = document.getElementById('redeem-copy-feedback');
-
-      if (!card || !gameCode) return;
-      lastIssuedGameCode = gameCode;
-
-      if (label) {
-        label.textContent = currentLang === 'fr'
-          ? 'Code de Rachat en Jeu Généré (Usage Unique)'
-          : 'One-Time In-Game Redemption Code Issued';
-      }
-      if (subtitle) {
-        subtitle.textContent = currentLang === 'fr'
-          ? 'Utilise ce code une seule fois sur le serveur Peace SMP pour recevoir ton rang.'
-          : 'Redeem this code once on the Peace SMP server to claim your rank.';
-      }
-      if (pill) {
-        pill.textContent = currentLang === 'fr' ? `Rang ${rankName}` : `${rankName} Rank`;
-      }
-      if (valueEl) {
-        valueEl.textContent = gameCode;
-      }
-      if (copyBtnText) {
-        copyBtnText.textContent = currentLang === 'fr' ? 'Copier le code' : 'Copy Code';
-      }
-      if (cmdHint) {
-        cmdHint.textContent = currentLang === 'fr'
-          ? `Commande en jeu : /rank ${gameCode}`
-          : `In-game command: /rank ${gameCode}`;
-      }
-      if (copyFeedback) {
-        copyFeedback.classList.add('hidden');
-        copyFeedback.textContent = '';
-      }
-      card.classList.remove('hidden');
-    }
-
-    // Copy the returned in-game code cleanly with accessible feedback
-    function copyIssuedGameCode() {
-      try {
-        const feedback = document.getElementById('redeem-copy-feedback');
-        if (!lastIssuedGameCode || !feedback) return;
-
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-          navigator.clipboard.writeText(lastIssuedGameCode).catch(() => {});
-        }
-
-        const tempInput = document.createElement('input');
-        tempInput.value = lastIssuedGameCode;
-        tempInput.setAttribute('readonly', '');
-        tempInput.style.position = 'fixed';
-        tempInput.style.opacity = '0';
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        const ok = document.execCommand('copy');
-        document.body.removeChild(tempInput);
-
-        feedback.classList.remove('hidden');
-        feedback.textContent = ok
-          ? (currentLang === 'fr' ? `Code copié : ${lastIssuedGameCode}` : `Copied code: ${lastIssuedGameCode}`)
-          : (currentLang === 'fr' ? `Code à copier : ${lastIssuedGameCode}` : `Code ready to copy: ${lastIssuedGameCode}`);
-      } catch (_err) {
-        // Ignore clipboard errors in restricted frames
-      }
-    }
-
-    // Check format & rank alignment without exposing any plain-text code list, returning a one-time in-game code
-    function handleCodeCheck(event) {
-      event.preventDefault();
-      try {
-        const input = document.getElementById('rank-code-input');
-        const resultBox = document.getElementById('verify-result');
-        const redeemCard = document.getElementById('redeem-code-card');
-        if (!input || !resultBox) return;
-
-        const raw = input.value.trim();
-        resultBox.classList.remove('hidden', 'bg-meadowSoft', 'border-meadow/40', 'bg-roseSoft', 'border-roseDust/50');
-        if (redeemCard) redeemCard.classList.add('hidden');
-
-        if (!raw) {
-          resultBox.classList.add('bg-roseSoft', 'border-roseDust/50');
-          resultBox.textContent = currentLang === 'fr'
-            ? 'Entre un code de vérification avant de lancer la vérification.'
-            : 'Please enter a verification code before checking.';
-          return;
-        }
-
-        const upper = raw.toUpperCase();
-        const codePattern = /^(?:V101|[A-ZÉ]{1,5})-[A-Z0-9]{3,6}-[A-Z0-9]{2,6}$/;
-        if (!codePattern.test(upper)) {
-          resultBox.classList.add('bg-roseSoft', 'border-roseDust/50');
-          resultBox.textContent = currentLang === 'fr'
-            ? 'Format de code invalide. Vérifie l’orthographe du code reçu pour ce rank.'
-            : 'Invalid code format. Please check the code format issued for this rank.';
-          return;
-        }
-
-        const prefix = upper.split('-')[0];
-        const allowedPrefixes = rankInfo[activeRank]?.expectedPrefixes || [];
-        if (!allowedPrefixes.includes(prefix)) {
-          resultBox.classList.add('bg-roseSoft', 'border-roseDust/50');
-          resultBox.textContent = currentLang === 'fr'
-            ? `Ce code ne correspond pas au rank ${activeRank}. Utilise uniquement le code prévu pour le rank ${activeRank}.`
-            : `This code does not match the ${activeRank} rank. Use only a code issued for ${activeRank}.`;
-          return;
-        }
-
-        const digest = createSessionFingerprint(`${activeRank}:${upper}`);
-        if (consumedSessionDigests.has(digest)) {
-          resultBox.classList.add('bg-roseSoft', 'border-roseDust/50');
-          resultBox.textContent = currentLang === 'fr'
-            ? 'Ce code a déjà été vérifié durant cette session et ne peut pas être réutilisé.'
-            : 'This code was already checked in this session and cannot be reused.';
-          return;
-        }
-
-        consumedSessionDigests.add(digest);
-        decrementRankCounter(activeRank, currentLang === 'fr' ? 'vérification' : 'verification');
-        const issuedGameCode = buildOneTimeGameCode(activeRank, digest);
-        input.value = '';
-        resultBox.classList.add('bg-meadowSoft', 'border-meadow/40');
-        resultBox.textContent = currentLang === 'fr'
-          ? `Code validé pour le rang ${activeRank} (${remainingRankCounts[activeRank]} restants sur ${getTotalRemainingCodes()}/101). Voici ton code de rachat en jeu à usage unique :`
-          : `Verification valid for ${activeRank} (${remainingRankCounts[activeRank]} remaining of ${getTotalRemainingCodes()}/101). Here is your one-time in-game redemption code:`;
-        renderIssuedGameCodeCard(issuedGameCode, activeRank);
-      } catch (err) {
-        console.error('Error checking verification code:', err);
-      }
-    }
-
-    // Switch between EN and FR across the entire UI
     function setLang(lang) {
-      try {
-        currentLang = lang === 'fr' ? 'fr' : 'en';
-        document.documentElement.lang = currentLang;
+      currentLang = lang;
+      document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
 
-        const btnEn = document.getElementById('btn-lang-en');
-        const btnFr = document.getElementById('btn-lang-fr');
-        if (btnEn && btnFr) {
-          btnEn.className = currentLang === 'en'
-            ? 'px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer bg-skyAccent text-white shadow-sm'
-            : 'px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer text-inkSoft hover:text-ink';
-          btnFr.className = currentLang === 'fr'
-            ? 'px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer bg-skyAccent text-white shadow-sm'
-            : 'px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer text-inkSoft hover:text-ink';
-        }
-
-        const dict = i18n[currentLang];
-        document.querySelectorAll('[data-i18n]').forEach((el) => {
-          const key = el.getAttribute('data-i18n');
-          if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-            el.textContent = dict[key];
-          }
-        });
-
-        const ifaceSection = document.getElementById('rank-interface-view');
-        if (ifaceSection && !ifaceSection.classList.contains('hidden')) {
-          renderRankInterface(activeRank);
-          const checkoutBox = document.getElementById('discord-checkout-box');
-          if (checkoutBox && !checkoutBox.classList.contains('hidden')) {
-            updateDiscordRankLine(activeRank);
-          }
-          const redeemCard = document.getElementById('redeem-code-card');
-          if (redeemCard && !redeemCard.classList.contains('hidden') && lastIssuedGameCode) {
-            renderIssuedGameCodeCard(lastIssuedGameCode, activeRank);
-          }
-        }
-        renderRemainingCounters();
-      } catch (err) {
-        console.error('Error switching language:', err);
-      }
-    }
-
-    // Copy server IP cleanly with accessible status feedback
-    function copyServerIp() {
-      try {
-        const ipEl = document.getElementById('server-ip-text');
-        const feedbackBox = document.getElementById('ip-feedback');
-        const feedbackMsg = document.getElementById('ip-feedback-msg');
-        if (!ipEl || !feedbackBox || !feedbackMsg) return;
-
-        const ipText = ipEl.textContent.trim();
-        let copied = false;
-
-        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-          navigator.clipboard.writeText(ipText).catch(() => {
-            // Fallback handled below if needed
-          });
-        }
-
-        const tempInput = document.createElement('input');
-        tempInput.value = ipText;
-        tempInput.setAttribute('readonly', '');
-        tempInput.style.position = 'fixed';
-        tempInput.style.opacity = '0';
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        copied = document.execCommand('copy');
-        document.body.removeChild(tempInput);
-
-        feedbackBox.classList.remove('hidden');
-        if (copied) {
-          feedbackMsg.textContent = currentLang === 'fr'
-            ? `Adresse copiée : ${ipText}`
-            : `Copied to clipboard: ${ipText}`;
-        } else {
-          feedbackMsg.textContent = currentLang === 'fr'
-            ? `Adresse du serveur : ${ipText} (sélectionne et copie manuellement si besoin).`
-            : `Server IP: ${ipText} (select and copy manually if needed).`;
-        }
-      } catch (_err) {
-        const feedbackBox = document.getElementById('ip-feedback');
-        const feedbackMsg = document.getElementById('ip-feedback-msg');
-        if (feedbackBox && feedbackMsg) {
-          feedbackBox.classList.remove('hidden');
-          feedbackMsg.textContent = currentLang === 'fr'
-            ? 'Adresse du serveur : play.peacesmp.net'
-            : 'Server IP: play.peacesmp.net';
-        }
-      }
-    }
-
-    // Open dedicated Rank Interface view from a rank card's Choose Rank / Choisir le rank button
-    function openRankInterface(rankName) {
-      try {
-        const homeView = document.getElementById('home-view');
-        const ifaceView = document.getElementById('rank-interface-view');
-        const checkoutBox = document.getElementById('discord-checkout-box');
-        const verifyResult = document.getElementById('verify-result');
-        const redeemCard = document.getElementById('redeem-code-card');
-        const codeInput = document.getElementById('rank-code-input');
-
-        if (checkoutBox) checkoutBox.classList.add('hidden');
-        if (redeemCard) redeemCard.classList.add('hidden');
-        if (verifyResult) {
-          verifyResult.classList.add('hidden');
-          verifyResult.textContent = '';
-        }
-        if (codeInput) codeInput.value = '';
-
-        renderRankInterface(rankName);
-
-        if (homeView) homeView.classList.add('hidden');
-        if (ifaceView) ifaceView.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) {
-        console.error('Error opening rank interface:', err);
-      }
-    }
-
-    // Return to the main home page view
-    function showHomeView() {
-      try {
-        const homeView = document.getElementById('home-view');
-        const ifaceView = document.getElementById('rank-interface-view');
-        if (ifaceView) ifaceView.classList.add('hidden');
-        if (homeView) homeView.classList.remove('hidden');
-        renderRemainingCounters();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) {
-        console.error('Error returning to home view:', err);
-      }
-    }
-
-    // Populate dedicated Rank Interface details for VIP, Pro, or Élite
-    function renderRankInterface(rankName) {
-      const normalized = rankInfo[rankName] ? rankName : 'VIP';
-      activeRank = normalized;
-      const details = rankInfo[normalized][currentLang] || rankInfo[normalized].en;
-
-      const badge = document.getElementById('iface-badge');
-      const title = document.getElementById('iface-title');
-      const subtitle = document.getElementById('iface-subtitle');
-      const cash = document.getElementById('iface-cash');
-      const kitName = document.getElementById('iface-kit-name');
-      const kitDesc = document.getElementById('iface-kit-desc');
-      const advTitle = document.getElementById('iface-adv-title');
-      const advDesc = document.getElementById('iface-adv-desc');
-      const swordOdds = document.getElementById('iface-sword-odds');
-      const swordDesc = document.getElementById('iface-sword-desc');
-      const perksList = document.getElementById('iface-perks-list');
-      const verifyHelper = document.getElementById('verify-helper-text');
-      const codeInput = document.getElementById('rank-code-input');
-
-      if (badge) badge.textContent = details.badge;
-      if (title) title.textContent = details.title;
-      if (subtitle) subtitle.textContent = details.subtitle;
-      if (cash) cash.textContent = details.cash;
-      if (kitName) kitName.textContent = details.kitName;
-      if (kitDesc) kitDesc.textContent = details.kitDesc;
-      if (advTitle) advTitle.textContent = details.advTitle;
-      if (advDesc) advDesc.textContent = details.advDesc;
-      if (swordOdds) swordOdds.textContent = details.swordOdds;
-      if (swordDesc) swordDesc.textContent = details.swordDesc;
-
-      if (verifyHelper) {
-        verifyHelper.textContent = currentLang === 'fr'
-          ? `Vérifie ici que ton code correspond bien au rang ${normalized} avant de l’utiliser en jeu.`
-          : `Check here that your code matches the ${normalized} rank before redeeming in-game.`;
-      }
-      if (codeInput) {
-        codeInput.placeholder = normalized === 'VIP'
-          ? 'VIP-XXXX-XXXX'
-          : normalized === 'Pro'
-            ? 'PRO-XXXX-XXXX'
-            : 'ELITE-XXXX-XXXX';
-      }
-
-      if (perksList) {
-        perksList.innerHTML = '';
-        details.perks.forEach((perk) => {
-          const li = document.createElement('li');
-          li.className = 'flex items-start gap-2.5 bg-white px-3.5 py-2.5 rounded-xl border border-ink/10';
-          const dot = document.createElement('span');
-          dot.className = 'mt-1.5 w-2 h-2 rounded-full bg-skyAccent shrink-0';
-          const text = document.createElement('span');
-          text.textContent = perk;
-          li.appendChild(dot);
-          li.appendChild(text);
-          perksList.appendChild(li);
-        });
-      }
-
-      ['VIP', 'Pro', 'Élite'].forEach((key) => {
-        const tab = document.getElementById(`switch-${key}`);
-        if (tab) {
-          tab.className = key === normalized
-            ? 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-skyAccent text-white shadow-sm transition-colors cursor-pointer'
-            : 'px-3.5 py-1.5 rounded-xl text-xs font-bold text-inkSoft hover:text-ink transition-colors cursor-pointer';
+      const dict = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
         }
       });
 
-      const checkoutBox = document.getElementById('discord-checkout-box');
-      if (checkoutBox && !checkoutBox.classList.contains('hidden')) {
-        updateDiscordRankLine(normalized);
+      renderCounters();
+      if (document.getElementById('rankDetailView').classList.contains('active')) {
+        populateRankDetail(selectedRank);
+      }
+    }
+
+    function populateRankDetail(rank) {
+      selectedRank = rank;
+      const info = i18n[currentLang].ranks[rank];
+      document.getElementById('selectedRankPill').textContent = info.pill;
+      document.getElementById('detailTitle').textContent = info.title;
+      document.getElementById('detailSubtitle').textContent = info.sub;
+      document.getElementById('detailOddsNote').textContent = info.odds;
+
+      const listEl = document.getElementById('detailPerksList');
+      listEl.innerHTML = info.perks
+        .map((p) => `<li><span class="check-dot" style="background: var(--bg-soft-blue); color: var(--sky-deep);">✓</span><span>${p}</span></li>`)
+        .join('');
+
+      const placeholders = {
+        vip: 'Ex: V101-K9M4-X7P2',
+        pro: 'Ex: P7M3-K9X4-L6',
+        elite: 'Ex: E9K5-M4X7-L2'
+      };
+      document.getElementById('codeInput').placeholder = placeholders[rank];
+    }
+
+    function openRankDetail(rank) {
+      populateRankDetail(rank);
+      document.getElementById('homeView').style.display = 'none';
+      const detail = document.getElementById('rankDetailView');
+      detail.classList.add('active');
+      document.getElementById('discordRevealBox').classList.remove('visible');
+      const fb = document.getElementById('verifyFeedback');
+      fb.className = 'verify-feedback';
+      fb.innerHTML = '';
+      document.getElementById('codeInput').value = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeRankDetail() {
+      document.getElementById('rankDetailView').classList.remove('active');
+      document.getElementById('homeView').style.display = 'block';
+    }
+
+    function revealBuyInfo() {
+      document.getElementById('discordRevealBox').classList.add('visible');
+    }
+
+    function detectCodeRank(code) {
+      if (code === 'V101-K9M4-X7P2') return 'vip';
+      if (/^(PVIP-|V-)[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code) || /^V[0-9A-Z]{3}-[0-9A-Z]{4}-[0-9A-Z]{2,4}$/.test(code)) {
+        return 'vip';
+      }
+      if (/^(PPRO-|P-)[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code) || /^P[0-9A-Z]{3}-[0-9A-Z]{4}-[0-9A-Z]{2,4}$/.test(code)) {
+        return 'pro';
+      }
+      if (/^(PELT-|E-)[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code) || /^E[0-9A-Z]{3}-[0-9A-Z]{4}-[0-9A-Z]{2,4}$/.test(code)) {
+        return 'elite';
+      }
+      return null;
+    }
+
+    function generateInGameCode(rank, verifCode) {
+      const prefix = rank === 'vip' ? 'IG-VIP' : rank === 'pro' ? 'IG-PRO' : 'IG-ELITE';
+      let hash = 0;
+      for (let i = 0; i < verifCode.length; i++) {
+        hash = ((hash << 5) - hash + verifCode.charCodeAt(i)) | 0;
+      }
+      const partA = Math.abs(hash).toString(36).toUpperCase().padStart(4, 'X').slice(0, 4);
+      const partB = verifCode.replace(/[^A-Z0-9]/g, '').slice(-4).padEnd(4, '9');
+      return `${prefix}-${partA}-${partB}`;
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text);
+      const old = btn.textContent;
+      btn.textContent = currentLang === 'fr' ? 'Copié !' : 'Copied!';
+      setTimeout(() => { btn.textContent = old; }, 1500);
+    }
+
+    function verifyCode(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('codeInput');
+      const fb = document.getElementById('verifyFeedback');
+      const code = inputEl.value.trim().toUpperCase();
+      const used = loadUsedSet();
+
+      if (!code) return;
+
+      if (used.has(code)) {
+        fb.className = 'verify-feedback err';
+        fb.textContent = currentLang === 'fr'
+          ? 'Ce code de vérification a déjà été utilisé.'
+          : 'This verification code has already been redeemed.';
+        return;
       }
 
-      renderRemainingCounters();
+      const detectedRank = detectCodeRank(code);
+      if (!detectedRank) {
+        fb.className = 'verify-feedback err';
+        fb.textContent = currentLang === 'fr'
+          ? 'Format de code invalide. Vérifie le code reçu auprès de Ego.'
+          : 'Invalid code format. Please check the code received from Ego.';
+        return;
+      }
+
+      if (detectedRank !== selectedRank) {
+        const rankLabel = detectedRank.toUpperCase();
+        fb.className = 'verify-feedback err';
+        fb.textContent = currentLang === 'fr'
+          ? `Ce code appartient au rang ${rankLabel} et ne peut pas être utilisé sur ${selectedRank.toUpperCase()}.`
+          : `This code belongs to ${rankLabel} and cannot be used on ${selectedRank.toUpperCase()}.`;
+        return;
+      }
+
+      const pool = loadPool();
+      if (pool[selectedRank] > 0) {
+        pool[selectedRank] -= 1;
+        savePool(pool);
+      }
+      used.add(code);
+      saveUsedSet(used);
+
+      const gameCode = generateInGameCode(selectedRank, code);
+      fb.className = 'verify-feedback ok';
+      fb.innerHTML = currentLang === 'fr'
+        ? `<div><strong>Code validé !</strong> Utilise ce code en jeu avec <code>/rank ${gameCode}</code> :</div>
+           <div class="ingame-code-box"><code>${gameCode}</code><button type="button" class="btn-copy-small" onclick="copyText('${gameCode}', this)">Copier</button></div>`
+        : `<div><strong>Code verified!</strong> Redeem this in-game code using <code>/rank ${gameCode}</code>:</div>
+           <div class="ingame-code-box"><code>${gameCode}</code><button type="button" class="btn-copy-small" onclick="copyText('${gameCode}', this)">Copy</button></div>`;
     }
 
-    function updateDiscordRankLine(rankName) {
-      const lineEl = document.getElementById('discord-selected-rank-line');
-      if (!lineEl) return;
-      lineEl.textContent = currentLang === 'fr'
-        ? `Rang sélectionné : ${rankName} — À confirmer avec Ego sur Discord`
-        : `Selected rank: ${rankName} — Confirm with Ego on Discord`;
+    function decrementSelectedRank() {
+      const pool = loadPool();
+      if (pool[selectedRank] > 0) {
+        pool[selectedRank] -= 1;
+        savePool(pool);
+      }
     }
 
-    // Reveal or toggle Discord purchase notice inside the Rank Interface view
-    function toggleDiscordCheckout() {
-      const box = document.getElementById('discord-checkout-box');
-      if (!box) return;
-      updateDiscordRankLine(activeRank);
-      box.classList.toggle('hidden');
+    function resetPool() {
+      localStorage.removeItem(STORAGE_USED_KEY);
+      savePool({ ...INITIAL_POOL });
     }
 
-    // Initialize default English language and remaining verification counters on load
-    document.addEventListener('DOMContentLoaded', () => {
-      setLang('en');
-      renderRemainingCounters();
-    });
+    renderCounters();
   </script>
 </body>
 </html>
-```
